@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fozone-validation>
+	<!-- include 标签导入其他配置 -->
+	<include file="validationfo/rules-user.fo.xml" />
+</fozone-validation>
