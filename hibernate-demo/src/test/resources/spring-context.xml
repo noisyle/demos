@@ -4,6 +4,7 @@
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 			http://www.springframework.org/schema/beans/spring-beans.xsd
 			http://www.springframework.org/schema/context
@@ -12,21 +13,27 @@
 			http://www.springframework.org/schema/tx/spring-tx.xsd
 			http://www.springframework.org/schema/aop
 			http://www.springframework.org/schema/aop/spring-aop.xsd
+			http://www.springframework.org/schema/jdbc
+			http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
 	">
 	<!-- 加载配置文件 -->
 	<context:property-placeholder location="classpath:spring-context.properties" />
 	<!-- 扫描service自动注入为bean -->
 	<context:component-scan base-package="com.noisyle.demo.springdemo.service,com.noisyle.demo.springdemo.dao" />
 	
+	<jdbc:initialize-database data-source="dataSource" ignore-failures="DROPS">
+        <jdbc:script location="classpath:sql/*.sql" encoding="utf-8" />
+    </jdbc:initialize-database>
+	
 	<!-- 配置数据源 dbcp -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="${jdbc.driverClassName}" />
 		<property name="url" value="${jdbc.url}" />
-		<property name="username" value="${jdbc.username}" />
-		<property name="password" value="${jdbc.password}" />
-		<property name="initialSize" value="${jdbc.initialSize}" />
-		<property name="maxActive" value="${jdbc.maxActive}" />
-		<property name="maxIdle" value="${jdbc.maxIdle}" />
+<!-- 		<property name="username" value="${jdbc.username}" /> -->
+<!-- 		<property name="password" value="${jdbc.password}" /> -->
+<!-- 		<property name="initialSize" value="${jdbc.initialSize}" /> -->
+<!-- 		<property name="maxActive" value="${jdbc.maxActive}" /> -->
+<!-- 		<property name="maxIdle" value="${jdbc.maxIdle}" /> -->
 	</bean>
 
 	<!-- 配置hibernate的SessionFactory -->

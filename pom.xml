@@ -11,9 +11,9 @@
 	<url>http://maven.apache.org</url>
 
 	<modules>
+		<module>hibernate-demo</module>
 		<module>fo-validation-demo</module>
 		<module>freemarker-demo</module>
-		<module>spring-demo</module>
 		<module>lambda-demo</module>
 		<module>netty-demo</module>
 		<module>quartz-demo</module>
@@ -31,7 +31,7 @@
 		<repository>
 			<id>ifinance-nexus</id>
 			<name>iFinance Nexus Repository</name>
-			<url>http://10.129.130.32:8081/nexus/content/groups/public</url>
+			<url>http://maven.aliyun.com/nexus/content/groups/public</url>
 		</repository>
 	</repositories>
 
@@ -39,7 +39,7 @@
 		<pluginRepository>
 			<id>ifinance-nexus</id>
 			<name>iFinance Nexus Repository</name>
-			<url>http://10.129.130.32:8081/nexus/content/groups/public</url>
+			<url>http://maven.aliyun.com/nexus/content/groups/public</url>
 		</pluginRepository>
 	</pluginRepositories>
 
@@ -106,6 +106,14 @@
 				<version>1.0.0</version>
 				<scope>provided</scope>
 			</dependency>
+
+			<dependency>
+				<groupId>com.h2database</groupId>
+				<artifactId>h2</artifactId>
+				<version>1.4.193</version>
+				<scope>test</scope>
+			</dependency>
+
 
 			<dependency>
 				<groupId>io.netty</groupId>
