@@ -14,6 +14,7 @@
 		<module>fo-validation-demo</module>
 		<module>freemarker-demo</module>
 		<module>hibernate-demo</module>
+		<module>j2ee-demo</module>
 		<module>lambda-demo</module>
 		<module>netty-demo</module>
 		<module>quartz-demo</module>

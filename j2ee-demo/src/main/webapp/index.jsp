@@ -1,0 +1,11 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"%>
+<!doctype html>
+<html>
+<body>
+<ol>
+<li><a href="eldemo.jsp">el表达式</a></li>
+<li><a href="filterdemo.jsp">filter、servlet</a></li>
+<li><a href="test">文件加载</a></li>
+</ol>
+</body>
+</html>
