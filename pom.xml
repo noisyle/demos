@@ -11,6 +11,7 @@
 	<url>http://maven.apache.org</url>
 
 	<modules>
+		<module>axis2</module>
 		<module>fo-validation-demo</module>
 		<module>freemarker-demo</module>
 		<module>hibernate-demo</module>
