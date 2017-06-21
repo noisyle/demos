@@ -22,12 +22,13 @@ public class TestServlet extends HttpServlet {
 		resp.setStatus(HttpServletResponse.SC_OK);
 		resp.setContentType("text/html; charset=UTF-8");
 		resp.getWriter().write("<!doctype html><html>");
-		resp.getWriter().write("realpath1: "+TestListener.getRealPath());
-		resp.getWriter().write("realpath2: "+req.getServletContext().getRealPath("/"));
+		resp.getWriter().write("getRealPath from Listener: "+TestListener.getRealPath());
 		resp.getWriter().write("<br />");
-		resp.getWriter().write("uri: "+TestServlet.class.getClassLoader().getResource("test.properties").toString());
+		resp.getWriter().write("getRealPath from Servlet: "+req.getServletContext().getRealPath("/"));
 		resp.getWriter().write("<br />");
-		resp.getWriter().write("content: "+p.getProperty("text"));
+		resp.getWriter().write("getResource(): "+TestServlet.class.getClassLoader().getResource("test.properties").toString());
+		resp.getWriter().write("<br />");
+		resp.getWriter().write("File Content: "+p.getProperty("text"));
 		resp.getWriter().write("</html>");
 	}
 }
