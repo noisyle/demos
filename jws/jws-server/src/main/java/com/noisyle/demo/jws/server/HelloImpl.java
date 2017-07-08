@@ -27,7 +27,9 @@ public class HelloImpl implements Hello {
 	}
 	
 	public static void main(String[] args) {
-		logger.debug("服务启动");
 		Endpoint.publish("http://localhost:8080/jws/hello", new HelloImpl());
+		System.out.println("服务已启动");
+		System.out.println("访问http://localhost:8080/jws/hello?wsdl查看WSDL");
+		System.out.println("运行wsimport -keep -encoding UTF-8 http://localhost:8080/jws/hello?wsdl生成客户端代码");
 	}
 }

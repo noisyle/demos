@@ -12,6 +12,7 @@
 		<module>jws-api</module>
 		<module>jws-server</module>
 		<module>jws-client</module>
+		<module>jws-client-generated</module>
 	</modules>
 
 </project>

@@ -1,20 +1,17 @@
 package com.noisyle.demo.jws.client;
 
-import java.net.URL;
-
-import javax.xml.namespace.QName;
-import javax.xml.ws.Service;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.noisyle.demo.jws.server.Hello;
-import com.noisyle.demo.jws.vo.HelloRequest;
-import com.noisyle.demo.jws.vo.HelloResponse;
+import com.noisyle.demo.jws.server.HelloImplService;
+import com.noisyle.demo.jws.server.HelloRequest;
+import com.noisyle.demo.jws.server.HelloResponse;
+import com.noisyle.demo.jws.server.User;
 
 /**
- *  手工编写客户端的例子。
- *  也可以用以下命令自动生成客户端代码：
+ *  调用自动生成客户端的例子。
+ *  客户端代码用以下命令自动生成：
  *  wsimport -keep -encoding UTF-8 http://localhost:8080/jws/hello?wsdl
  */
 public class HelloClient {
@@ -23,17 +20,12 @@ public class HelloClient {
 	public String sayHello() {
 		String msg = null;
 		try {
-			URL url = new URL("http://localhost:8080/jws/hello?wsdl");
-			
-			// 第一个参数对应wsdl中的targetNamespace
-			// 第二个参数对应wsdl中的name
-			QName qname = new QName("http://server.jws.demo.noisyle.com/", "HelloImplService");
-			Service service = Service.create(url, qname);
 			HelloRequest request = new HelloRequest();
-			HelloRequest.User user = new HelloRequest.User();
+			User user = new User();
 			user.setName("world");
 			request.setUser(user);
-			Hello hello = service.getPort(Hello.class);
+			HelloImplService service = new HelloImplService();
+			Hello hello = service.getHelloImplPort();
 			HelloResponse response = hello.sayHello(request);
 			logger.debug("message: {}", response.getResult().getMessage());
 			msg = response.getResult().getMessage();

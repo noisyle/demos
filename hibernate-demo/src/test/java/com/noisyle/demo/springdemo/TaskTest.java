@@ -15,7 +15,7 @@ public class TaskTest {
 	final static private Logger logger = LoggerFactory.getLogger(TaskTest.class);
 	
 	@Test
-	public void testTask() {
+	public void testFindAllExecuteImmediately() {
 		@SuppressWarnings("resource")
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("spring-context.xml");
 		TaskService service = ctx.getBean(TaskService.class);
