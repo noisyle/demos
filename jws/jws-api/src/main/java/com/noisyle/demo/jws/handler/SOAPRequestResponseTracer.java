@@ -36,18 +36,17 @@ public class SOAPRequestResponseTracer implements SOAPHandler<SOAPMessageContext
 			try {
 				final String message = messageToString(smc);
 				if (isOutboundMessage(smc)) {
-					LOGGER.info("Outbound message : " + message);
+					LOGGER.info("Outbound message: {}", message);
 				} else {
-					LOGGER.info("Inbound message : " + message);
+					LOGGER.info("Inbound message: {}", message);
 				}
 			} catch (IOException | SOAPException e) {
-				LOGGER.error("Exception in handler: " + e, e);
+				LOGGER.error("Exception in handler:", e);
 			}
 		}
 	}
 
 	private String messageToString(SOAPMessageContext smc) throws SOAPException, IOException {
-
 		final ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		smc.getMessage().writeTo(baos);
 		return baos.toString();

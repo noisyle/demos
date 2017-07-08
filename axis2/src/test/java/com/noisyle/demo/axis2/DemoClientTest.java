@@ -11,13 +11,4 @@ public class DemoClientTest {
 		System.out.println(StringUtils.join(new DemoClient().getSupportCity(), ","));
 	}
 	
-//	@Test
-//	public void testGetSupportCityByRPC() throws RemoteException {
-//		System.out.println(new DemoClient().getSupportCityByRPC());
-//	}
-
-//	@Test
-//	public void testGetSupportCityByDocument() throws RemoteException {
-//		System.out.println(new DemoClient().getSupportCityByDocument());
-//	}
 }
