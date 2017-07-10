@@ -1,0 +1,57 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.noisyle.demo</groupId>
+		<artifactId>demo-parent</artifactId>
+		<version>0.1.0-SNAPSHOT</version>
+	</parent>
+	<artifactId>itextpdf</artifactId>
+	<packaging>jar</packaging>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>itextpdf</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>itext-asian</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.xhtmlrenderer</groupId>
+			<artifactId>flying-saucer-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.xhtmlrenderer</groupId>
+			<artifactId>flying-saucer-pdf-itext5</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.freemarker</groupId>
+			<artifactId>freemarker</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>${project.artifactId}</finalName>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<configuration>
+					<executable>java</executable>
+					<mainClass>com.noisyle.demo.itextpdf.PDFConverter</mainClass>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
