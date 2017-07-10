@@ -13,15 +13,15 @@
 	<modules>
 		<module>axis2</module>
 		<module>concurrent</module>
-		<module>fo-validation-demo</module>
-		<module>freemarker-demo</module>
-		<module>hibernate-demo</module>
+		<module>fovalidation</module>
+		<module>freemarker</module>
+		<module>hibernate</module>
 		<module>j2ee</module>
 		<module>jws</module>
 		<module>lambda</module>
 		<module>netty</module>
 		<module>quartz</module>
-		<module>rest-demo</module>
+		<module>rest</module>
 		<module>sqlinject</module>
 	</modules>
 
