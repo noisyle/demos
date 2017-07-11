@@ -11,6 +11,7 @@
 	<url>http://maven.apache.org</url>
 
 	<modules>
+		<module>annotation</module>
 		<module>axis2</module>
 		<module>concurrent</module>
 		<module>fovalidation</module>
@@ -117,6 +118,11 @@
 				<groupId>commons-io</groupId>
 				<artifactId>commons-io</artifactId>
 				<version>2.5</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-beanutils</groupId>
+				<artifactId>commons-beanutils</artifactId>
+				<version>1.9.3</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.commons</groupId>
