@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @PropertySource("classpath:spring-context.properties")
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 @EnableTransactionManagement
-@ComponentScan(basePackages = { "com.noisyle.demo.restdemo.server.repository", "com.noisyle.demo.restdemo.server.service" })
+@ComponentScan(basePackages = { "com.noisyle.demo.rest.server.repository", "com.noisyle.demo.rest.server.service" })
 public class AppConfig {
 
 }
