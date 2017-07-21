@@ -8,12 +8,12 @@
 	</parent>
 	<artifactId>j2ee</artifactId>
 	<packaging>war</packaging>
-	
+
 	<properties>
 		<jetty.port>8081</jetty.port>
 		<jetty.context.path>${project.artifactId}</jetty.context.path>
 	</properties>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>javax.servlet</groupId>
