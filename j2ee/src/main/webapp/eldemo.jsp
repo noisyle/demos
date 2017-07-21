@@ -4,7 +4,7 @@
 if(request.getParameter("list")!=null) request.setAttribute("list", request.getParameter("list").split(","));
 %>
 <!doctype html>
-<html>
+<html lang="zh-CN">
 <body>
 	<c:forEach var="item" items="${list}">
 	<c:set var="num">${num+1}</c:set>

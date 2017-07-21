@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <!doctype html>
-<html>
+<html lang="zh-CN">
 <body>
 	<form id="form" action="demo">
 		Request Parameter: <br />

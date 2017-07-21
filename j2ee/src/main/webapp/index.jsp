@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <!doctype html>
-<html>
+<html lang="zh-CN">
 <body>
 <ol>
 <li><a href="eldemo.jsp">el表达式</a></li>

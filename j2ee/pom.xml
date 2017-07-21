@@ -8,7 +8,12 @@
 	</parent>
 	<artifactId>j2ee</artifactId>
 	<packaging>war</packaging>
-
+	
+	<properties>
+		<jetty.port>8081</jetty.port>
+		<jetty.context.path>${project.artifactId}</jetty.context.path>
+	</properties>
+	
 	<dependencies>
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -25,10 +30,10 @@
 					<!-- <scanIntervalSeconds>10</scanIntervalSeconds> -->
 					<reload>manual</reload>
 					<httpConnector>
-						<port>8081</port>
+						<port>${jetty.port}</port>
 					</httpConnector>
 					<webAppConfig>
-						<contextPath>/${project.artifactId}</contextPath>
+						<contextPath>/${jetty.context.path}</contextPath>
 					</webAppConfig>
 				</configuration>
 			</plugin>
