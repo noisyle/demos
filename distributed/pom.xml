@@ -10,7 +10,7 @@
 	<packaging>jar</packaging>
 
 	<properties>
-		<use.lock></use.lock>
+		<lock></lock>
 	</properties>
 
 	<dependencies>
@@ -36,9 +36,10 @@
 				<artifactId>exec-maven-plugin</artifactId>
 				<configuration>
 					<executable>java</executable>
-					<mainClass>com.noisyle.demo.distributed.test.TestWithoutLock</mainClass>
+					<cleanupDaemonThreads>false</cleanupDaemonThreads>
+					<mainClass>com.noisyle.demo.distributed.test.TestLock</mainClass>
 					<arguments>
-						<argument>${use.lock}</argument>
+						<argument>${lock}</argument>
 					</arguments>
 				</configuration>
 			</plugin>

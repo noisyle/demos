@@ -6,12 +6,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import redis.clients.jedis.JedisPoolConfig;
 
 @Configuration
+@PropertySource({"classpath:spring-context.properties"})
 @ComponentScan(basePackages = { "com.noisyle.demo.distributed.lock" })
 public class AppConfig {
 	@Value("${host:127.0.0.1}")
