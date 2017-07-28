@@ -15,6 +15,7 @@
 		<module>annotation</module>
 		<module>axis2</module>
 		<module>concurrent</module>
+		<module>distributed</module>
 		<module>fovalidation</module>
 		<module>freemarker</module>
 		<module>hibernate</module>
@@ -83,12 +84,29 @@
 				<artifactId>spring-tx</artifactId>
 				<version>${spring.framework.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-aop</artifactId>
+				<version>${spring.framework.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-oxm</artifactId>
+				<version>${spring.framework.version}</version>
+			</dependency>
 
 			<dependency>
 				<groupId>org.springframework.data</groupId>
 				<artifactId>spring-data-jpa</artifactId>
 				<version>1.11.4.RELEASE</version>
 			</dependency>
+
+			<dependency>
+				<groupId>org.springframework.data</groupId>
+				<artifactId>spring-data-redis</artifactId>
+				<version>1.8.6.RELEASE</version>
+			</dependency>
+
 
 			<dependency>
 				<groupId>javax.servlet</groupId>
@@ -151,6 +169,12 @@
 				<artifactId>commons-lang3</artifactId>
 				<version>3.4</version>
 			</dependency>
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-pool2</artifactId>
+				<version>2.4.2</version>
+			</dependency>
+
 
 			<dependency>
 				<groupId>cglib</groupId>
@@ -251,6 +275,12 @@
 				<artifactId>h2</artifactId>
 				<version>1.4.193</version>
 				<scope>test</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>redis.clients</groupId>
+				<artifactId>jedis</artifactId>
+				<version>2.9.0</version>
 			</dependency>
 
 			<dependency>
