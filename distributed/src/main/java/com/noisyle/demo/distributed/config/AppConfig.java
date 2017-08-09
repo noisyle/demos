@@ -20,11 +20,11 @@ public class AppConfig {
 	private String host;
 	@Value("${port:6379}")
 	private int port;
-	@Value("${maxIdle:300}")
+	@Value("${maxIdle:5}")
 	private int maxIdle;
-	@Value("${maxTotal:600}")
+	@Value("${maxTotal:10}")
 	private int maxTotal;
-	@Value("${maxWaitMillis:1000}")
+	@Value("${maxWaitMillis:100}")
 	private int maxWaitMillis;
 
 	@Bean

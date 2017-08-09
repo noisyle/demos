@@ -24,7 +24,7 @@ public class TestLock {
             context = new AnnotationConfigApplicationContext(AppConfig.class);
             lock = (DistributedLock) context.getBean("distributedLock");
         }
-        int count = 10;
+        int count = 20;
         List<DemoThread> threadList = new LinkedList<DemoThread>();
         Random random = new Random();
         for (int i = 0; i < count; i++) {
@@ -60,6 +60,7 @@ public class TestLock {
 }
 
 class DemoThread extends Thread {
+	final static private String KEY = "DEMO_KEY";
     public static int count = 0;
     public boolean running;
     private int tid;
@@ -75,16 +76,17 @@ class DemoThread extends Thread {
     @Override
     public void run() {
         if (lock != null) {
-            while (!lock.lock("test", String.valueOf(tid))) {
+            while (!lock.lock(KEY, String.valueOf(tid))) {
                 try {
-                    System.out.println("Thread " + tid + " waiting for lock...");
+                    System.out.println("Thread " + tid + ":\twaiting for lock...");
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
         }
-        System.out.println("Thread " + tid + " start, count=" + count);
+        System.out.println("Thread " + tid + ":\tget lock");
+        System.out.println("Thread " + tid + ":\tstart, count=" + count);
         int tmp = count;
         try {
             random.setSeed(tid);
@@ -94,10 +96,11 @@ class DemoThread extends Thread {
         }
         tmp++;
         count = tmp;
-        System.out.println("Thread " + tid + " stoped, count=" + count);
+        System.out.println("Thread " + tid + ":\tstoped, count=" + count);
         running = false;
         if (lock != null) {
-            lock.unlock("test", String.valueOf(tid));
+        	System.out.println("Thread " + tid + ":\trelease lock");
+            lock.unlock(KEY, String.valueOf(tid));
         }
     }
 }
