@@ -20,7 +20,7 @@ public class UserRepository {
 	
 	public User getUserByCondition(User condition) {
 		User user = null;
-		List<User> userList = userMapper.listUsers(condition);
+		List<User> userList = userMapper.getUserByCondition(condition);
 		if(userList!=null && !userList.isEmpty()) {
 			user = userList.get(0);
 		}
@@ -30,12 +30,21 @@ public class UserRepository {
 	
 	public User getUserByConditionSafe(User condition) {
 		User user = null;
-		List<User> userList = userMapper.listUsersSafe(condition);
+		List<User> userList = userMapper.getUserByConditionSafe(condition);
 		if(userList!=null && !userList.isEmpty()) {
 			user = userList.get(0);
 		}
 		logger.debug("查询结果: {}", user);
 		return user;
 	}
+	
+	public List<User> list() {
+		List<User> userList = userMapper.list();
+		logger.debug("查询结果: {}", userList);
+		return userList;
+	}
 
+	public void add(User user) {
+		userMapper.add(user);
+	}
 }

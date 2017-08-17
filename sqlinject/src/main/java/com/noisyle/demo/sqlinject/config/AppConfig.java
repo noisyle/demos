@@ -11,16 +11,18 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @PropertySource(value = { "classpath:/spring-context.properties" })
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 @EnableTransactionManagement(proxyTargetClass = true)
-@ComponentScan({ "com.noisyle.demo.sqlinject.repository" })
+@ComponentScan({ "com.noisyle.demo.sqlinject.repository", "com.noisyle.demo.sqlinject.service" })
 @MapperScan("com.noisyle.demo.sqlinject.persistence")
 public class AppConfig {
 
@@ -56,4 +58,9 @@ public class AppConfig {
 		return sqlSessionFactory;
 	}
 	
+	@Bean
+	public PlatformTransactionManager transactionManager() {
+		DataSourceTransactionManager transactionManager = new DataSourceTransactionManager(dataSource());
+		return transactionManager;
+	}
 }
