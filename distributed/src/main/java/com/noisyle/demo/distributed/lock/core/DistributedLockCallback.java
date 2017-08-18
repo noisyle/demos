@@ -1,7 +1,7 @@
-package com.noisyle.demo.distributed.lock;
+package com.noisyle.demo.distributed.lock.core;
 
 
-public interface LockCallback {
+public interface DistributedLockCallback {
 	Object onSuccess() throws InterruptedException;
 	Object onTimeout() throws InterruptedException;
 }

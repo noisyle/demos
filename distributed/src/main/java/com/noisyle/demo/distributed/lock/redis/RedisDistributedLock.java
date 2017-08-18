@@ -7,8 +7,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 
 import redis.clients.jedis.Jedis;
 
-import com.noisyle.demo.distributed.lock.DistributedLock;
-import com.noisyle.demo.distributed.lock.LockObject;
+import com.noisyle.demo.distributed.lock.core.DistributedLock;
+import com.noisyle.demo.distributed.lock.core.DistributedLockObject;
 
 public class RedisDistributedLock implements DistributedLock {
 
@@ -17,13 +17,17 @@ public class RedisDistributedLock implements DistributedLock {
     final private static String luaLock = "local r = tonumber(redis.call('SETNX', KEYS[1], ARGV[1]));\n"
             + "redis.call('PEXPIRE', KEYS[1], ARGV[2]);\n"
             + "return r";
-    final private static String luaUnlock = "redis.call('DEL', KEYS[1]);";
+    
+    final private static String luaUnlock = "local v = redis.call('GET', KEYS[1]);\n"
+    		+ "if v == ARGV[1] then\n"
+    		+ "redis.call('DEL',KEYS[1]);\n"
+    		+ "end";
 
     public RedisDistributedLock(RedisTemplate<String, String> template) {
     	this.template = template;
 	}
     
-	public boolean lock(LockObject lo, long timeout) {
+	public boolean lock(DistributedLockObject lo, long timeout) {
 		long r = template.execute(new RedisCallback<Long>() {
 			@Override
 			public Long doInRedis(RedisConnection connection) throws DataAccessException {
@@ -34,7 +38,7 @@ public class RedisDistributedLock implements DistributedLock {
 		return r==1;
 	}
 
-	public void unlock(LockObject lo, long timeout) {
+	public void unlock(DistributedLockObject lo, long timeout) {
 		template.execute(new RedisCallback<Long>() {
 			@Override
 			public Long doInRedis(RedisConnection connection) throws DataAccessException {

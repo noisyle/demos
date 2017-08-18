@@ -12,7 +12,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 
 import redis.clients.jedis.JedisPoolConfig;
 
-import com.noisyle.demo.distributed.lock.DistributedLock;
+import com.noisyle.demo.distributed.lock.core.DistributedLock;
 import com.noisyle.demo.distributed.lock.redis.RedisDistributedLock;
 
 @Configuration
