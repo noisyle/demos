@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,16 +11,13 @@
 	<form action="add" method="post">
 		<input name="username" placeholder="用户名" />
 		<input type="password" name="password" placeholder="密码" />
-		<button>登录</button>
-		<button type="button" onclick="javascript:window.location.href='index.jsp';">返回</button>
+		<button>新增</button>
+		<button type="button" onclick="javascript:window.location.href='${pageContext.request.contextPath}';">返回</button>
 	</form>
 <ul>
-<%
-java.util.List<com.noisyle.demo.sqlinject.entity.User> users = (java.util.List<com.noisyle.demo.sqlinject.entity.User>) request.getAttribute("users");
-for(com.noisyle.demo.sqlinject.entity.User user : users){
-	out.println("<li>" + user.getUsername() + "</li>");
-}
-%>
+<c:forEach var="user" items="${users}" varStatus="status">
+	<li>${status.count}:&nbsp;${user.username}</li>
+</c:forEach>
 </ul>
 </body>
 </html>

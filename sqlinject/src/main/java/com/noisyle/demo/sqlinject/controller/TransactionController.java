@@ -20,14 +20,14 @@ public class TransactionController {
 	private TransactionService service;
 
 	@RequestMapping(value="/add", method=RequestMethod.GET)
-	public ModelAndView login(ModelAndView model) {
+	public ModelAndView add(ModelAndView model) {
 		model.addObject("users", service.list());
 		model.setViewName("add.jsp");
 		return model;
 	}
 	
 	@RequestMapping(value="/add", method=RequestMethod.POST)
-	public ModelAndView login(ModelAndView model, User user) {
+	public ModelAndView add(ModelAndView model, User user) {
 		logger.debug("参数: {}", user);
 		try {
 			service.add(user);

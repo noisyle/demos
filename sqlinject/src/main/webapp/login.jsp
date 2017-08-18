@@ -11,7 +11,7 @@
 		<input name="username" placeholder="用户名" />
 		<input type="password" name="password" placeholder="密码" />
 		<button>登录</button>
-		<button type="button" onclick="javascript:window.location.href='/sqlinjectdemo';">返回</button>
+		<button type="button" onclick="javascript:window.location.href='${pageContext.request.contextPath}';">返回</button>
 	</form>
 	<c:choose>
 		<c:when test="${user != null}">
