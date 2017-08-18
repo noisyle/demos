@@ -2,6 +2,6 @@ package com.noisyle.demo.distributed.lock;
 
 
 public interface DistributedLock {
-	boolean lock(String key, String value);
-	void unlock(String key, String value);
+	boolean lock(LockObject lo, long timeout);
+	void unlock(LockObject lo, long timeout);
 }

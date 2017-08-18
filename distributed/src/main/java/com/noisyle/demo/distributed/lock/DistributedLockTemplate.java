@@ -1,5 +1,11 @@
 package com.noisyle.demo.distributed.lock;
 
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.ReentrantLock;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -7,22 +13,67 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class DistributedLockTemplate implements ApplicationContextAware {
-	
+	final static private Logger logger = LoggerFactory.getLogger(DistributedLockTemplate.class);
 	private static DistributedLock lock;
+	private static ThreadLocal<LockObject> locks= new ThreadLocal<LockObject>();
+	private static long retryInterval = 100;
+	private static ReentrantLock reentrantLock = new ReentrantLock();
 
-	public static boolean lock(String key, long timeout, LockCallback callbank) {
+	public static Object execute(String key, long timeout, LockCallback callback) {
 		checkDistributedLock();
-		return lock.lock(key, "1");
+		boolean hasLock = false;
+		try {
+			if(lock(key, timeout)) {
+				hasLock = true;
+				return callback.onSuccess();
+			}else{
+				return callback.onTimeout();
+			}
+		} catch (InterruptedException e) {
+            logger.error(e.getMessage(), e);
+            Thread.currentThread().interrupt();
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+		} finally {
+			if(hasLock){
+				unlock(key, timeout);
+			}
+		}
+		return null;
+	}
+	
+	private static boolean lock(String key, long timeout) {
+		LockObject lo = getLockObject(key);
+		long expireAt = System.currentTimeMillis() + timeout;
+		logger.debug("{}", reentrantLock);
+		reentrantLock.lock();
+		Condition con = reentrantLock.newCondition();
+		try {
+			while(System.currentTimeMillis() < expireAt) {
+				if(lock.lock(lo, timeout)) {
+					return true;
+				}else{
+					con.await(retryInterval, TimeUnit.MILLISECONDS);
+				}
+			}
+		} catch (InterruptedException e) {
+            logger.error(e.getMessage(), e);
+            Thread.interrupted();
+		} finally {
+			reentrantLock.unlock();
+		}
+		return false;
 	}
 
-	public static void unlock(String key, long timeout, LockCallback callbank) {
-		checkDistributedLock();
-		lock.unlock(key, "1");
+	private static void unlock(String key, long timeout) {
+		LockObject lo = getLockObject(key);
+		lock.unlock(lo, timeout);
 	}
 
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
 		lock = applicationContext.getBean(DistributedLock.class);
+		logger.debug("DistributedLock: {}", lock);
 		checkDistributedLock();
 	}
 	
@@ -32,4 +83,14 @@ public class DistributedLockTemplate implements ApplicationContextAware {
 		}
 	}
 
+	private static LockObject getLockObject(String key) {
+		LockObject lo = locks.get();
+		if (lo == null) {
+			lo = new LockObject();
+			lo.setKey(key);
+			lo.setValue(key  + "_" + Thread.currentThread().getId());
+			locks.set(lo);
+		}
+		return lo;
+	}
 }
