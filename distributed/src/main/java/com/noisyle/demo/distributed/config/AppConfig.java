@@ -12,6 +12,9 @@ import org.springframework.data.redis.core.RedisTemplate;
 
 import redis.clients.jedis.JedisPoolConfig;
 
+import com.noisyle.demo.distributed.lock.DistributedLock;
+import com.noisyle.demo.distributed.lock.redis.RedisDistributedLock;
+
 @Configuration
 @PropertySource({"classpath:spring-context.properties"})
 @ComponentScan(basePackages = { "com.noisyle.demo.distributed.lock" })
@@ -55,4 +58,14 @@ public class AppConfig {
 		template.setConnectionFactory(jedisConnectionFactory);
 		return template;
 	}
+	
+	@Bean
+	@DependsOn("redisTemplate")
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public DistributedLock distributedLock(@Autowired RedisTemplate redisTemplate) {
+		DistributedLock distributedLock = new RedisDistributedLock(redisTemplate);
+		return distributedLock;
+	}
+	
+	
 }
