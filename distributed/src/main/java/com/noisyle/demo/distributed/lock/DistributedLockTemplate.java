@@ -23,7 +23,7 @@ public class DistributedLockTemplate implements ApplicationContextAware {
 	private static long retryInterval = 100;
 	private static ReentrantLock reentrantLock = new ReentrantLock();
 
-	public static Object execute(String key, long timeout, DistributedLockCallback callback) {
+	public static <T> T execute(String key, long timeout, DistributedLockCallback<T> callback) {
 		checkDistributedLock();
 		boolean hasLock = false;
 		try {

@@ -31,7 +31,7 @@ public class TestLock {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			DemoThread t = new DemoThread(i, useLock);
+			DemoThread t = new DemoThread(useLock);
 			threadList.add(t);
 			t.start();
 		}
@@ -55,52 +55,48 @@ public class TestLock {
 class DemoThread extends Thread {
 	final static private String KEY = "DEMO_KEY";
 	public static int count = 0;
-	public boolean running;
-	private int tid;
+	public boolean running = true;
 	private boolean useLock;
 	private static long timeout = 60000;
 	private static Random random = new Random();
 
-	public DemoThread(int tid, boolean useLock) {
-		this.tid = tid;
+	public DemoThread(boolean useLock) {
 		this.useLock = useLock;
-		this.running = true;
 	}
 
 	@Override
 	public void run() {
+		int result = -1;
 		if (useLock) {
-			DistributedLockTemplate.execute(KEY, timeout, new DistributedLockCallback() {
+			result = DistributedLockTemplate.execute(KEY, timeout, new DistributedLockCallback<Integer>() {
 				@Override
-				public Object onSuccess() {
-					innerRun();
-					return null;
+				public Integer onSuccess() throws InterruptedException {
+					return innerRun();
 				}
 
 				@Override
-				public Object onTimeout() {
-					System.out.println("Thread " + tid + ":\ttimeout, count=" + count);
+				public Integer onTimeout() throws InterruptedException {
+					System.out.println("Thread " + Thread.currentThread().getId() + ":\ttimeout, count=" + count);
 					running = false;
-					return null;
+					throw new InterruptedException("Thread " + Thread.currentThread().getId() + ":\ttimeout");
 				}
 			});
 		} else {
-			innerRun();
+			result = innerRun();
 		}
+		System.out.println("Thread " + Thread.currentThread().getId() + ":\tstoped, result=" + result);
+		running = false;
 	}
 
-	private void innerRun() {
-		System.out.println("Thread " + tid + ":\tstart, count=" + count);
+	private int innerRun() {
 		int tmp = count;
 		try {
-			random.setSeed(tid);
+			random.setSeed(Thread.currentThread().getId());
 			sleep(random.nextInt(1000));
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		tmp++;
-		count = tmp;
-		System.out.println("Thread " + tid + ":\tstoped, count=" + count);
-		running = false;
+		count = ++tmp;
+		return count;
 	}
 }
