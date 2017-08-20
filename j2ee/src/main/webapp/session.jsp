@@ -5,7 +5,7 @@
 <%
 String sessionId = request.getSession().getId();
 response.setHeader("Set-Cookie", "JSESSIONID="+sessionId+"; HttpOnly");
-out.write("SessionID: "+sessionId);
+out.write("JSESSIONID: "+sessionId);
 %>
 </body>
 </html>

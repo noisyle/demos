@@ -1,4 +1,4 @@
-package com.noisyle.demo.j2ee.server;
+package com.noisyle.demo.j2ee.xss;
 
 import java.io.IOException;
 
