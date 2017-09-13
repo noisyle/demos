@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh_CN">
 <head>
 <style>
 @page {
@@ -10,6 +10,9 @@
   }
   @bottom-center {
     content: element(footer)
+  }
+  @bottom-right {
+    content: "Page " counter(page) " of " counter(pages);
   }
 }
 * {
@@ -50,6 +53,7 @@ th {
 </head>
 <body>
 <div class='header'><h1>${table_name}</h1></div>
+<div class='footer'><h2>打印时间: ${print_time?string("yyyy-MM-dd HH:mm:ss")}。</h2></div>
 <#list table_datas as table_data>
 <div class='content'>
   <table cellspacing="0" cellpadding="0">
@@ -85,6 +89,5 @@ th {
   </table>
 </div>
 </#list>
-<div class='footer'><h2>打印时间: ${print_time?string("yyyy-MM-dd HH:mm:ss")}。</h2></div>
 </body>
 </html>
