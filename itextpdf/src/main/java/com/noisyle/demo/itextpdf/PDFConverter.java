@@ -29,8 +29,6 @@ import freemarker.template.TemplateExceptionHandler;
 public class PDFConverter {
 	final private static Logger logger = LoggerFactory.getLogger(PDFConverter.class);
 
-	final private static String JSON = "{\"rows\":[{\"balance\":\"900,000.00\",\"ROWNUM1\":1,\"expiryDate\":\"2015-02-16\",\"userId\":74,\"userName\":\"MGMT_VIEW\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":2,\"expiryDate\":\"2015-02-16\",\"userId\":0,\"userName\":\"SYS\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":3,\"expiryDate\":\"2015-02-16\",\"userId\":5,\"userName\":\"SYSTEM\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":4,\"expiryDate\":\"2015-02-16\",\"userId\":30,\"userName\":\"DBSNMP\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":5,\"expiryDate\":\"2015-02-16\",\"userId\":72,\"userName\":\"SYSMAN\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":6,\"expiryDate\":\"2015-02-16\",\"userId\":9,\"userName\":\"OUTLN\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":7,\"expiryDate\":\"2015-02-16\",\"userId\":75,\"userName\":\"FLOWS_FILES\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":8,\"expiryDate\":\"2015-02-16\",\"userId\":57,\"userName\":\"MDSYS\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":9,\"expiryDate\":\"2015-02-16\",\"userId\":53,\"userName\":\"ORDSYS\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":10,\"expiryDate\":\"2015-02-16\",\"userId\":42,\"userName\":\"EXFSYS\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":11,\"expiryDate\":\"2015-02-16\",\"userId\":32,\"userName\":\"WMSYS\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":12,\"expiryDate\":\"2015-02-16\",\"userId\":31,\"userName\":\"APPQOSSYS\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":13,\"expiryDate\":\"2015-02-16\",\"userId\":78,\"userName\":\"APEX_030200\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":14,\"expiryDate\":\"2015-02-16\",\"userId\":83,\"userName\":\"OWBSYS_AUDIT\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":15,\"expiryDate\":\"2015-02-16\",\"userId\":54,\"userName\":\"ORDDATA\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":16,\"expiryDate\":\"2015-02-16\",\"userId\":43,\"userName\":\"CTXSYS\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":17,\"expiryDate\":\"2015-02-16\",\"userId\":46,\"userName\":\"ANONYMOUS\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":18,\"expiryDate\":\"2015-02-16\",\"userId\":45,\"userName\":\"XDB\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":19,\"expiryDate\":\"2015-02-16\",\"userId\":55,\"userName\":\"ORDPLUGINS\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":20,\"expiryDate\":\"2015-02-16\",\"userId\":79,\"userName\":\"OWBSYS\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":21,\"expiryDate\":\"2015-02-16\",\"userId\":56,\"userName\":\"SI_INFORMTN_SCHEMA\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":22,\"expiryDate\":\"2015-02-16\",\"userId\":61,\"userName\":\"OLAPSYS\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":23,\"expiryDate\":\"2015-02-16\",\"userId\":84,\"userName\":\"SCOTT\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":24,\"expiryDate\":\"2015-02-16\",\"userId\":21,\"userName\":\"ORACLE_OCM\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":25,\"expiryDate\":\"2015-02-16\",\"userId\":2147483638,\"userName\":\"XS$NULL\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":26,\"expiryDate\":\"2015-02-16\",\"userId\":90,\"userName\":\"BI\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":27,\"expiryDate\":\"2015-02-16\",\"userId\":89,\"userName\":\"PM\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":28,\"expiryDate\":\"2015-02-16\",\"userId\":65,\"userName\":\"MDDATA\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":29,\"expiryDate\":\"2015-02-16\",\"userId\":87,\"userName\":\"IX\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":30,\"expiryDate\":\"2015-02-16\",\"userId\":88,\"userName\":\"SH\"}],\"total\":30}";
-
 	private static Configuration cfg;
 
 	static {
@@ -42,19 +40,10 @@ public class PDFConverter {
 		cfg.setLogTemplateExceptions(false);
 	}
 
-	private static String renderHTML(String ftl, Object param) {
-		ByteArrayOutputStream out = new ByteArrayOutputStream();
-        Template template;
-		try {
-			Writer writer = new BufferedWriter(new OutputStreamWriter(out));
-			template = cfg.getTemplate(ftl);
-			template.process(param, writer);
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (TemplateException e) {
-			e.printStackTrace();
-		}
-		return out.toString();
+	private static void renderHTML(String ftl, Object param, OutputStream out) throws TemplateException, IOException {
+		Writer writer = new BufferedWriter(new OutputStreamWriter(out));
+		Template template = cfg.getTemplate(ftl);
+		template.process(param, writer);
 	}
 
 	private static void convertHtml2PDF(String html, OutputStream out) throws DocumentException, IOException {
@@ -66,28 +55,53 @@ public class PDFConverter {
 		renderer.createPDF(out);
 	}
 
+	private static List<Map<String, Object>> getFlatTitle(List<List<Map<String, Object>>> titles) {
+		// TODO compatible with multi-level headers
+		return titles != null && titles.size() > 0 ? titles.get(titles.size() - 1) : null;
+	}
+
+	@SuppressWarnings("unchecked")
 	public static void main(String[] args) throws IOException {
+		String _table_name = "表格名称";
+		String _title = "[[{\"field\":\"userId\",\"sortable\":true,\"width\":\"100\",\"title\":\"用户ID\",\"boxWidth\":92,\"cellClass\":\"datagrid-cell-c1-userId\",\"cellSelector\":\"div.datagrid-cell-c1-userId\"},{\"field\":\"userName\",\"sortable\":true,\"width\":\"300\",\"title\":\"用户名称\",\"boxWidth\":292,\"cellClass\":\"datagrid-cell-c1-userName\",\"cellSelector\":\"div.datagrid-cell-c1-userName\"},{\"field\":\"expiryDate\",\"sortable\":true,\"width\":\"200\",\"title\":\"格式化时间\",\"boxWidth\":192,\"cellClass\":\"datagrid-cell-c1-expiryDate\",\"cellSelector\":\"div.datagrid-cell-c1-expiryDate\"},{\"field\":\"balance\",\"sortable\":true,\"width\":\"200\",\"title\":\"格式化金额\",\"boxWidth\":192,\"cellClass\":\"datagrid-cell-c1-balance\",\"cellSelector\":\"div.datagrid-cell-c1-balance\"}]]";
+		String _data = "{\"rows\":[{\"balance\":\"900,000.00\",\"ROWNUM1\":1,\"expiryDate\":\"2015-02-16\",\"userId\":74,\"userName\":\"MGMT_VIEW\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":2,\"expiryDate\":\"2015-02-16\",\"userId\":0,\"userName\":\"SYS\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":3,\"expiryDate\":\"2015-02-16\",\"userId\":5,\"userName\":\"SYSTEM\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":4,\"expiryDate\":\"2015-02-16\",\"userId\":30,\"userName\":\"DBSNMP\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":5,\"expiryDate\":\"2015-02-16\",\"userId\":72,\"userName\":\"SYSMAN\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":6,\"expiryDate\":\"2015-02-16\",\"userId\":9,\"userName\":\"OUTLN\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":7,\"expiryDate\":\"2015-02-16\",\"userId\":75,\"userName\":\"FLOWS_FILES\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":8,\"expiryDate\":\"2015-02-16\",\"userId\":57,\"userName\":\"MDSYS\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":9,\"expiryDate\":\"2015-02-16\",\"userId\":53,\"userName\":\"ORDSYS\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":10,\"expiryDate\":\"2015-02-16\",\"userId\":42,\"userName\":\"EXFSYS\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":11,\"expiryDate\":\"2015-02-16\",\"userId\":32,\"userName\":\"WMSYS\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":12,\"expiryDate\":\"2015-02-16\",\"userId\":31,\"userName\":\"APPQOSSYS\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":13,\"expiryDate\":\"2015-02-16\",\"userId\":78,\"userName\":\"APEX_030200\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":14,\"expiryDate\":\"2015-02-16\",\"userId\":83,\"userName\":\"OWBSYS_AUDIT\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":15,\"expiryDate\":\"2015-02-16\",\"userId\":54,\"userName\":\"ORDDATA\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":16,\"expiryDate\":\"2015-02-16\",\"userId\":43,\"userName\":\"CTXSYS\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":17,\"expiryDate\":\"2015-02-16\",\"userId\":46,\"userName\":\"ANONYMOUS\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":18,\"expiryDate\":\"2015-02-16\",\"userId\":45,\"userName\":\"XDB\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":19,\"expiryDate\":\"2015-02-16\",\"userId\":55,\"userName\":\"ORDPLUGINS\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":20,\"expiryDate\":\"2015-02-16\",\"userId\":79,\"userName\":\"OWBSYS\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":21,\"expiryDate\":\"2015-02-16\",\"userId\":56,\"userName\":\"SI_INFORMTN_SCHEMA\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":22,\"expiryDate\":\"2015-02-16\",\"userId\":61,\"userName\":\"OLAPSYS\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":23,\"expiryDate\":\"2015-02-16\",\"userId\":84,\"userName\":\"SCOTT\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":24,\"expiryDate\":\"2015-02-16\",\"userId\":21,\"userName\":\"ORACLE_OCM\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":25,\"expiryDate\":\"2015-02-16\",\"userId\":2147483638,\"userName\":\"XS$NULL\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":26,\"expiryDate\":\"2015-02-16\",\"userId\":90,\"userName\":\"BI\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":27,\"expiryDate\":\"2015-02-16\",\"userId\":89,\"userName\":\"PM\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":28,\"expiryDate\":\"2015-02-16\",\"userId\":65,\"userName\":\"MDDATA\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":29,\"expiryDate\":\"2015-02-16\",\"userId\":87,\"userName\":\"IX\"},{\"balance\":\"900,000.00\",\"ROWNUM1\":30,\"expiryDate\":\"2015-02-16\",\"userId\":88,\"userName\":\"SH\"}],\"total\":30}";
+
 		ObjectMapper mapper = new ObjectMapper();
-		TableData data = mapper.readValue(JSON, TableData.class);
+		TableData data = mapper.readValue(_data, TableData.class);
+		List<List<Map<String, Object>>> titles = mapper.readValue(_title, List.class);
 		logger.debug(mapper.writeValueAsString(data));
-        
+		logger.debug(mapper.writeValueAsString(getFlatTitle(titles)));
+
 		Date printtime = new Date();
 		Map<String, Object> param = new HashMap<>();
-		param.put("printtime", printtime);
+		param.put("table_name", _table_name);
+		param.put("print_time", printtime);
+		param.put("title", titles);
+		param.put("flat_title", getFlatTitle(titles));
 		param.put("total", data.getTotal());
 		param.put("rows", data.getRows());
 		param.put("footer", data.getFooter());
-		String html = renderHTML("table.ftl", param);
-		logger.debug(html);
-
-		OutputStream out = new FileOutputStream("d:\\test"+printtime.getTime()+".pdf");
+		ByteArrayOutputStream out_template = new ByteArrayOutputStream();
 		try {
-			convertHtml2PDF(html, out);
+			renderHTML("table.ftl", param, out_template);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			if (out != null) {
-				out.close();
+			if (out_template != null) {
+				out_template.close();
+			}
+		}
+		String html = out_template.toString();
+		logger.debug(html);
+
+		OutputStream out_html = new FileOutputStream("d:\\test" + printtime.getTime() + ".pdf");
+		try {
+			convertHtml2PDF(html, out_html);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (out_html != null) {
+				out_html.close();
 			}
 		}
 	}
@@ -97,25 +111,31 @@ class TableData {
 	private int total;
 	private List<Map<String, Object>> rows;
 	private List<Map<String, Object>> footer;
+
 	public int getTotal() {
 		return total;
 	}
+
 	public void setTotal(int total) {
 		this.total = total;
 	}
+
 	public List<Map<String, Object>> getRows() {
 		return rows;
 	}
+
 	public void setRows(List<Map<String, Object>> rows) {
 		this.rows = rows;
 	}
+
 	public List<Map<String, Object>> getFooter() {
 		return footer;
 	}
+
 	public void setFooter(List<Map<String, Object>> footer) {
 		this.footer = footer;
 	}
-	
+
 	@Override
 	public String toString() {
 		return String.format("total:%d rows:%s", total, rows.size());

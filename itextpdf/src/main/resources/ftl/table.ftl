@@ -38,28 +38,28 @@ th {
 	<table cellspacing="0" cellpadding="0">
 		<thead>
 			<tr>
-				<th colspan="4">标题</th>
+				<th colspan="${flat_title?size}">${table_name}</th>
 			</tr>
+			<#list title as row>
 			<tr>
-				<th>用户ID</th>
-				<th>用户名称</th>
-				<th>演示格式化时间</th>
-				<th>演示格式化金额</th>
+				<#list row as col>
+				<th>${col.title}</th>
+				</#list>
 			</tr>
+			</#list>
 		</thead>
 		<tbody>
 		<#list rows as row>
 			<tr>
-				<td>${row.userId}</td>
-				<td>${row.userName}</td>
-				<td>${row.expiryDate}</td>
-				<td>${row.balance}</td>
+				<#list flat_title as col>
+				<td>${row[col.field]}</td>
+				</#list>
 			</tr>
 		</#list>
 		</tbody>
 		<tfoot>
 			<tr>
-				<td colspan="4">打印时间: ${printtime?string("yyyy-MM-dd HH:mm:ss")}，共${total}条记录。</td>
+				<td colspan="${flat_title?size}">打印时间: ${print_time?string("yyyy-MM-dd HH:mm:ss")}，共${total}条记录。</td>
 			</tr>
 		</tfoot>
 	</table>
