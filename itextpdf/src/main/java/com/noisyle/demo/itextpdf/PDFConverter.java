@@ -96,7 +96,8 @@ public class PDFConverter {
 		param.put("print_time", printtime);
 		param.put("title", titles);
 		param.put("flat_title", getFlatTitle(titles));
-		param.put("table_datas", pagination(data, pageSize));
+//		param.put("table_datas", pagination(data, pageSize));
+		param.put("table_datas", new TableData[]{data});
 		ByteArrayOutputStream out_template = new ByteArrayOutputStream();
 		try {
 			renderHTML("table.ftl", param, out_template);
