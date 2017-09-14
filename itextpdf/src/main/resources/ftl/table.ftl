@@ -6,13 +6,13 @@
   size: 11.69in 8.27in;
   margin: 0.7in 0.4in 0.7in 0.4in;
   @top-center {
-    content: element(header)
-  }
-  @bottom-center {
-    content: element(footer)
+    content: element(header);
   }
   @bottom-right {
-    content: "Page " counter(page) " of " counter(pages);
+    content: element(print-time);
+  }
+  @bottom-center {
+    content: element(page-info);
   }
 }
 * {
@@ -20,12 +20,33 @@
   font-size: 12px;
 }
 div.header {
-  display: block; text-align: center; 
+  display: block;
+  text-align: center; 
   position: running(header);
 }
-div.footer {
-  display: block; text-align: center;
-  position: running(footer);
+div.print-time {
+  display: block;
+  text-align: center;
+  position: running(print-time);
+}
+div.page-info {
+  display: block;
+  text-align: center;
+  position: running(page-info);
+}
+@media screen {
+  div.print-time {
+    display: none;
+  }
+  div.page-info {
+    display: none;
+  }
+}
+span.page_number:before {
+  content: counter(page);
+}
+span.page_count:before {
+  content: counter(pages);
 }
 div.content {
   page-break-after: always;
@@ -53,7 +74,8 @@ th {
 </head>
 <body>
 <div class='header'><h1>${table_name}</h1></div>
-<div class='footer'><h2>打印时间: ${print_time?string("yyyy-MM-dd HH:mm:ss")}。</h2></div>
+<div class='print-time'>${print_time?string("yyyy-MM-dd HH:mm:ss")}</div>
+<div class='page-info'>第<span class="page_number"></span>页，共<span class="page_count"></span>页</div>
 <#list table_datas as table_data>
 <div class='content'>
   <table cellspacing="0" cellpadding="0">
