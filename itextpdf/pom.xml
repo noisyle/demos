@@ -7,55 +7,17 @@
 		<version>0.1.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>itextpdf</artifactId>
-	<packaging>jar</packaging>
+	<packaging>pom</packaging>
 
-	<dependencies>
-		<dependency>
-			<groupId>com.itextpdf</groupId>
-			<artifactId>itextpdf</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.itextpdf</groupId>
-			<artifactId>itext-asian</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.xhtmlrenderer</groupId>
-			<artifactId>flying-saucer-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.xhtmlrenderer</groupId>
-			<artifactId>flying-saucer-pdf-itext5</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.freemarker</groupId>
-			<artifactId>freemarker</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>commons-io</groupId>
-			<artifactId>commons-io</artifactId>
-		</dependency>
-	</dependencies>
+	<modules>
+		<module>itextpdf-api</module>
+		<module>itextpdf-web</module>
+	</modules>
 
-	<build>
-		<finalName>${project.artifactId}</finalName>
-		<resources>
-			<resource>
-				<directory>src/main/resources</directory>
-			</resource>
-		</resources>
-		<plugins>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>exec-maven-plugin</artifactId>
-				<configuration>
-					<executable>java</executable>
-					<mainClass>com.noisyle.demo.itextpdf.PDFConverter</mainClass>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+	<properties>
+		<java.source.version>1.6</java.source.version>
+		<java.target.version>1.6</java.target.version>
+		<java.encoding>UTF-8</java.encoding>
+	</properties>
+	
 </project>

@@ -7,13 +7,13 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.io.Charsets;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,27 +43,26 @@ public class PDFConverter {
 		cfg.setLogTemplateExceptions(false);
 	}
 
-	private static void renderHTML(String ftl, Object param, OutputStream out) throws TemplateException, IOException {
+	public static void renderHTML(String ftl, Object param, OutputStream out) throws TemplateException, IOException {
 		Writer writer = new BufferedWriter(new OutputStreamWriter(out));
 		Template template = cfg.getTemplate(ftl);
 		template.process(param, writer);
 	}
 
-	private static void convertHTML2PDF(String html, OutputStream out) throws DocumentException, IOException {
+	public static void convertHTML2PDF(String html, OutputStream out) throws DocumentException, IOException {
 		ITextRenderer renderer = new ITextRenderer();
-		renderer.getFontResolver().addFont(PDFConverter.class.getResource("/fonts/ARIALUNI.TTF").getPath(),
-				BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+		renderer.getFontResolver().addFont("fonts/ARIALUNI.TTF", BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
 		renderer.setDocumentFromString(html);
 		renderer.layout();
 		renderer.createPDF(out);
 	}
 	
-	private static List<Map<String, Object>> getFlatTitle(List<List<Map<String, Object>>> titles) {
+	public static List<Map<String, Object>> getFlatTitle(List<List<Map<String, Object>>> titles) {
 		// TODO compatible with multi-level headers
 		return titles != null && titles.size() > 0 ? titles.get(titles.size() - 1) : null;
 	}
 	
-	private static List<TableData> pagination(TableData tableData, int pageSize) {
+	public static List<TableData> pagination(TableData tableData, int pageSize) {
 		List<TableData> tables = new LinkedList<TableData>();
 		TableData tmp = null;
 		for (int i = 0; i * pageSize < tableData.getRows().size(); i++) {
@@ -91,7 +90,7 @@ public class PDFConverter {
 		logger.debug(mapper.writeValueAsString(getFlatTitle(titles)));
 
 		Date printtime = new Date();
-		Map<String, Object> param = new HashMap<>();
+		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("table_name", _table_name);
 		param.put("print_time", printtime);
 		param.put("title", titles);
@@ -112,7 +111,7 @@ public class PDFConverter {
 		logger.debug(html);
 
 		OutputStream out_html = new FileOutputStream("d:\\test" + printtime.getTime() + ".html");
-		IOUtils.write(html, out_html, StandardCharsets.UTF_8);
+		IOUtils.write(html, out_html, Charsets.UTF_8);
 		
 		OutputStream out_pdf = new FileOutputStream("d:\\test" + printtime.getTime() + ".pdf");
 		try {
