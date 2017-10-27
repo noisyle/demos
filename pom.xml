@@ -10,12 +10,19 @@
 	<name>demo-parent</name>
 	<url>http://maven.apache.org</url>
 
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.5.7.RELEASE</version>
+	</parent>
+
 	<modules>
 		<module>activiti</module>
 		<module>annotation</module>
 		<module>axis2</module>
 		<module>concurrent</module>
 		<module>distributed</module>
+		<module>druid</module>
 		<module>fovalidation</module>
 		<module>freemarker</module>
 		<module>hibernate</module>
