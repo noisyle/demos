@@ -34,10 +34,12 @@
 		<module>netty</module>
 		<module>quartz</module>
 		<module>rest</module>
+		<module>scheduledtask</module>
 		<module>sqlinject</module>
 	</modules>
 
 	<properties>
+		<java.version>1.8</java.version>
 		<java.source.version>1.8</java.source.version>
 		<java.target.version>1.8</java.target.version>
 		<java.encoding>UTF-8</java.encoding>
