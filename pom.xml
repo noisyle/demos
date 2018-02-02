@@ -36,6 +36,7 @@
 		<module>rest</module>
 		<module>scheduledtask</module>
 		<module>sqlinject</module>
+		<module>zip</module>
 	</modules>
 
 	<properties>
