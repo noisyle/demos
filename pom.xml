@@ -28,6 +28,7 @@
 		<module>hibernate</module>
 		<module>itextpdf</module>
 		<module>j2ee</module>
+		<module>jni</module>
 		<module>jws</module>
 		<module>lambda</module>
 		<module>lucene</module>
