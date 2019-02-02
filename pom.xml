@@ -30,6 +30,7 @@
 		<module>j2ee</module>
 		<module>jni</module>
 		<module>jws</module>
+		<module>jxls</module>
 		<module>lambda</module>
 		<module>lucene</module>
 		<module>netty</module>
