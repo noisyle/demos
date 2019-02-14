@@ -25,4 +25,9 @@ public class Working {
         this.code = code;
         this.name = name;
     }
+
+    @Override
+    public String toString() {
+        return "Working [code=" + code + ", name=" + name + "]";
+    }
 }

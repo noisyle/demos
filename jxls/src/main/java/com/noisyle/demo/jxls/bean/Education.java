@@ -25,4 +25,9 @@ public class Education {
         this.code = code;
         this.name = name;
     }
+
+    @Override
+    public String toString() {
+        return "Education [code=" + code + ", name=" + name + "]";
+    }
 }

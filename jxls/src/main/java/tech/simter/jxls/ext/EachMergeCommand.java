@@ -56,7 +56,7 @@ public class EachMergeCommand extends EachCommand {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("rawtypes")
     public Size applyAt(CellRef cellRef, Context context) {
         // collect sub command areas
         List<Area> childAreas = this.getAreaList().stream().flatMap(area1 -> area1.getCommandDataList().stream())

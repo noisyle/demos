@@ -25,4 +25,9 @@ public class Organization {
         this.code = code;
         this.name = name;
     }
+
+    @Override
+    public String toString() {
+        return "Organization [code=" + code + ", name=" + name + "]";
+    }
 }
