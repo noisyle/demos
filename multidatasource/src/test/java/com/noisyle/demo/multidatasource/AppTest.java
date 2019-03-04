@@ -19,8 +19,14 @@ public class AppTest {
     private UserRepository repo;
     
     @Test
-    public void test() {
-        List<User> list = repo.getList();
-        Assert.assertNotNull(list);
+    public void test1() {
+        List<User> list1 = repo.getDb1List();
+        Assert.assertNotNull(list1);
+    }
+    
+    @Test
+    public void test2() {
+        List<User> list2 = repo.getDb2List();
+        Assert.assertNotNull(list2);
     }
 }
