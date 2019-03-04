@@ -1,37 +1,41 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.noisyle.demo</groupId>
     <artifactId>demo-parent</artifactId>
     <version>0.1.0-SNAPSHOT</version>
   </parent>
-  <artifactId>jxls</artifactId>
+  <artifactId>guice</artifactId>
 
   <dependencies>
     <dependency>
-      <groupId>org.jxls</groupId>
-      <artifactId>jxls</artifactId>
-      <version>2.2.9</version>
+      <groupId>com.google.inject</groupId>
+      <artifactId>guice</artifactId>
+      <version>4.2.2</version>
     </dependency>
-    <dependency>
-      <groupId>org.jxls</groupId>
-      <artifactId>jxls-poi</artifactId>
-      <version>1.0.8</version>
-    </dependency>
+
   </dependencies>
 
   <build>
     <plugins>
       <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <configuration>
+          <executable>java</executable>
+          <mainClass>com.noisyle.demo.guice.Test</mainClass>
+        </configuration>
+      </plugin>
+      <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
         <configuration>
-          <descriptors>
-            <descriptor>src/assembly/assembly.xml</descriptor>
-          </descriptors>
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
           <archive>
             <manifest>
-              <mainClass>com.noisyle.demo.jxls.App</mainClass>
+              <mainClass>com.noisyle.demo.guice.Test</mainClass>
             </manifest>
           </archive>
         </configuration>

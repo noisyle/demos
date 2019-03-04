@@ -25,6 +25,7 @@
 		<module>druid</module>
 		<module>fovalidation</module>
 		<module>freemarker</module>
+		<module>guice</module>
 		<module>hibernate</module>
 		<module>itextpdf</module>
 		<module>j2ee</module>
