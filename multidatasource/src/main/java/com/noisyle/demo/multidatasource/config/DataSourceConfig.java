@@ -10,13 +10,16 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.Primary;
 
 import com.noisyle.demo.multidatasource.datasource.MultipleDataSource;
+import com.noisyle.demo.multidatasource.datasource.MultipleDataSourceAspect;
 import com.zaxxer.hikari.HikariDataSource;
 
 @Configuration
 @MapperScan(basePackages = "com.noisyle.demo.multidatasource.repository", sqlSessionFactoryRef = "sqlSessionFactory")
+@EnableAspectJAutoProxy(proxyTargetClass = true)
 public class DataSourceConfig {
     
     @Bean
@@ -47,10 +50,14 @@ public class DataSourceConfig {
 
     @Bean
     @ConfigurationProperties(prefix = "mybatis")
-    public SqlSessionFactoryBean sqlSessionFactory() throws Exception {
+    public SqlSessionFactoryBean sqlSessionFactory() {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource());
         return sqlSessionFactoryBean;
     }
 
+    @Bean
+    public MultipleDataSourceAspect multipleDataSourceAspect() {
+        return new MultipleDataSourceAspect();
+    }
 }

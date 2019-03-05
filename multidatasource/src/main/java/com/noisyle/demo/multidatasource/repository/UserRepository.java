@@ -8,9 +8,10 @@ import com.noisyle.demo.multidatasource.annotation.DataSource;
 import com.noisyle.demo.multidatasource.entity.User;
 
 @Mapper
-@DataSource("db3")
 public interface UserRepository {
+    @DataSource("db1")
     List<User> getDb1List();
     
+    @DataSource("db2")
     List<User> getDb2List();
 }
