@@ -37,6 +37,7 @@
 		<module>multidatasource</module>
 		<module>netty</module>
 		<module>pdfjs</module>
+		<module>qrcode</module>
 		<module>quartz</module>
 		<module>rest</module>
 		<module>scheduledtask</module>
