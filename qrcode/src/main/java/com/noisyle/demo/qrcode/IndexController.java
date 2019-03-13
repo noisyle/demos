@@ -33,12 +33,13 @@ public class IndexController {
     public void index(HttpServletResponse res,
             @RequestParam(required = false, defaultValue = "oFmnD5M92Sz52pKQb88FyJXPmTBQ") String text) {
         try {
+            logger.debug("Create image with watermark: {}", text);
             res.setContentType("image/png");
             res.setHeader("Pragma", "no-cache");
             res.setHeader("Cache-Control", "no-cache");
             ImageIO.write(createWatermark(text), "png", res.getOutputStream());
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("Create image failed!", e);
         }
     }
 
@@ -51,15 +52,14 @@ public class IndexController {
             res.setHeader("Cache-Control", "no-cache");
             ImageIO.write(createBarcode(text, 50, null), "png", res.getOutputStream());
         } catch (WriterException e) {
-            e.printStackTrace();
+            logger.error("Create image failed!", e);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("Create image failed!", e);
         }
     }
 
     @RequestMapping("/source")
-    public void source(HttpServletResponse res,
-            @RequestParam(required = false, defaultValue = "oFmnD5M92Sz52pKQb88FyJXPmTBQ") String text) {
+    public void source(HttpServletResponse res) {
         try {
             res.setContentType("image/png");
             res.setHeader("Pragma", "no-cache");
@@ -67,7 +67,7 @@ public class IndexController {
             ImageIO.write(ImageIO.read(new ClassPathResource("fin_bg.png").getInputStream()), "png",
                     res.getOutputStream());
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("Create image failed!", e);
         }
     }
 
@@ -83,7 +83,7 @@ public class IndexController {
             BufferedImage image = createWatermark(text);
             ImageIO.write(applyWatermark(background, image), "png", res.getOutputStream());
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("Create image failed!", e);
         }
     }
 
