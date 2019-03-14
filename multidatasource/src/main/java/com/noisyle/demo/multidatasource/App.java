@@ -11,5 +11,6 @@ public class App {
     public static void main(String[] args) {
         ApplicationContext ctx = SpringApplication.run(App.class, args);
         ctx.getBean(UserRepository.class).getDb1List();
+        ctx.getBean(UserRepository.class).getDb2List();
     }
 }
