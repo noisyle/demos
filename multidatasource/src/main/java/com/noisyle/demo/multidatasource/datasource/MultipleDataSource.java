@@ -10,7 +10,7 @@ public class MultipleDataSource extends AbstractRoutingDataSource {
     @Override
     protected Object determineCurrentLookupKey() {
         String dataSourceType = MultipleDataSourceHolder.getDataSourceType();
-        logger.debug("Select DataSource: {}", dataSourceType);
+        logger.debug("Use DataSource: {}", dataSourceType == null ? "default" : dataSourceType);
         return dataSourceType;
     }
 
