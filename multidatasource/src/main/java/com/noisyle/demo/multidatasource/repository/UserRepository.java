@@ -12,6 +12,5 @@ public interface UserRepository {
     @DataSource("db1")
     List<User> getDb1List();
     
-    @DataSource("db2")
     List<User> getDb2List();
 }
