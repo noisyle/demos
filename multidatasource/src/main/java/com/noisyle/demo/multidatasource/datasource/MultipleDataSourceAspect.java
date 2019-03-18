@@ -35,17 +35,17 @@ public class MultipleDataSourceAspect {
         try {
             Method method = className.getMethod(methodName, argClass);
             annotation = AnnotationUtils.findAnnotation(method, DataSource.class);
-            logger.debug("Annotation of method: {}", annotation);
+            logger.debug("DataSource annotation of method: {}", annotation);
             if(annotation!=null) {
                 dataSourceType = annotation.value();
-                MultipleDataSourceHolder.setDataSourceType(dataSourceType);
+                MultipleDataSource.setDataSourceType(dataSourceType);
                 return;
             }
             annotation = AnnotationUtils.findAnnotation(className, DataSource.class);
-            logger.debug("Annotation of class: {}", annotation);
+            logger.debug("DataSource annotation of class: {}", annotation);
             if(annotation!=null) {
                 dataSourceType = annotation.value();
-                MultipleDataSourceHolder.setDataSourceType(dataSourceType);
+                MultipleDataSource.setDataSourceType(dataSourceType);
                 return;
             }
         } catch (Exception e) {
@@ -56,6 +56,6 @@ public class MultipleDataSourceAspect {
     @After("pointcut()")
     public void after(JoinPoint point) {
         logger.debug("After pointcut");
-        MultipleDataSourceHolder.clearDataSourceType();
+        MultipleDataSource.clearDataSourceType();
     }
 }
