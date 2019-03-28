@@ -1,6 +1,9 @@
 package com.noisyle.demo.websocket;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -25,7 +28,9 @@ public class WebSocketController {
     }
 
     @Scheduled(fixedDelay = 1000)
-    public void publishUpdates() {
-        template.convertAndSend("/topic/greetings", new Greeting("Server", new Date().getTime()));
+    public void updateLineChart() {
+        Map<String, Object> res = new HashMap<String, Object>();
+        res.put("data", new Random().nextInt(500) + 800);
+        template.convertAndSend("/topic/linechart", res);
     }
 }
