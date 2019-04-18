@@ -1,0 +1,8 @@
+server:
+  port: 8000
+
+jwt:
+  header: Authorization
+  secret: mySecret
+  expiration: 86400
+  tokenHead: "Bearer "
