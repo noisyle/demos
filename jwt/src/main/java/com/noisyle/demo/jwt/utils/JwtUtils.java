@@ -109,8 +109,7 @@ public class JwtUtils {
 
     public Boolean canTokenBeRefreshed(String token, Date lastPasswordReset) {
         final Date created = getCreatedDateFromToken(token);
-        return !isCreatedBeforeLastPasswordReset(created, lastPasswordReset)
-                && (!isTokenExpired(token));
+        return !isCreatedBeforeLastPasswordReset(created, lastPasswordReset) && (!isTokenExpired(token));
     }
 
     public String refreshToken(String token) {
@@ -124,24 +123,22 @@ public class JwtUtils {
         return refreshedToken;
     }
 
-
     public Boolean validateToken(String token, UserDetails userDetails) {
         UserDetail userDetail = (UserDetail) userDetails;
         final long userId = getUserIdFromToken(token);
         final String username = getUsernameFromToken(token);
-//        final Date created = getCreatedDateFromToken(token);
-        return (userId == userDetail.getId()
-                && username.equals(userDetail.getUsername())
-                && !isTokenExpired(token)
-//                && !isCreatedBeforeLastPasswordReset(created, userDetail.getLastPasswordResetDate())
+        // final Date created = getCreatedDateFromToken(token);
+        return (userId == userDetail.getId() && username.equals(userDetail.getUsername()) && !isTokenExpired(token)
+        // && !isCreatedBeforeLastPasswordReset(created,
+        // userDetail.getLastPasswordResetDate())
         );
     }
 
     public String generateRefreshToken(UserDetail userDetail) {
         Map<String, Object> claims = generateClaims(userDetail);
         // 只授于更新 token 的权限
-        String roles[] = new String[]{JwtUtils.ROLE_REFRESH_TOKEN};
-//        claims.put(CLAIM_KEY_AUTHORITIES, JSONUtil.toJSON(roles));
+        String roles[] = new String[] { JwtUtils.ROLE_REFRESH_TOKEN };
+        // claims.put(CLAIM_KEY_AUTHORITIES, JSONUtil.toJSON(roles));
         claims.put(CLAIM_KEY_AUTHORITIES, "[\"" + JwtUtils.ROLE_REFRESH_TOKEN + "\"]");
         return generateRefreshToken(userDetail.getUsername(), claims);
     }
@@ -160,13 +157,11 @@ public class JwtUtils {
         }
         return false;
     }
+
     private Claims getClaimsFromToken(String token) {
         Claims claims;
         try {
-            claims = Jwts.parser()
-                    .setSigningKey(secret)
-                    .parseClaimsJws(token)
-                    .getBody();
+            claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
         } catch (Exception e) {
             claims = null;
         }
@@ -196,7 +191,7 @@ public class JwtUtils {
         return generateToken(subject, claims, access_token_expiration);
     }
 
-    private List authoritiesToArray(Collection<? extends GrantedAuthority> authorities) {
+    private List<String> authoritiesToArray(Collection<? extends GrantedAuthority> authorities) {
         List<String> list = new ArrayList<>();
         for (GrantedAuthority ga : authorities) {
             list.add(ga.getAuthority());
@@ -204,23 +199,14 @@ public class JwtUtils {
         return list;
     }
 
-
     private String generateRefreshToken(String subject, Map<String, Object> claims) {
         return generateToken(subject, claims, refresh_token_expiration);
     }
 
-
-
     private String generateToken(String subject, Map<String, Object> claims, long expiration) {
-        return Jwts.builder()
-                .setClaims(claims)
-                .setSubject(subject)
-                .setId(UUID.randomUUID().toString())
-                .setIssuedAt(new Date())
-                .setExpiration(generateExpirationDate(expiration))
-                .compressWith(CompressionCodecs.DEFLATE)
-                .signWith(SIGNATURE_ALGORITHM, secret)
-                .compact();
+        return Jwts.builder().setClaims(claims).setSubject(subject).setId(UUID.randomUUID().toString())
+                .setIssuedAt(new Date()).setExpiration(generateExpirationDate(expiration))
+                .compressWith(CompressionCodecs.DEFLATE).signWith(SIGNATURE_ALGORITHM, secret).compact();
     }
 
 }
