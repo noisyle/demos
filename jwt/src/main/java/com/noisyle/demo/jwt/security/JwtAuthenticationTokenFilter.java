@@ -19,11 +19,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import com.noisyle.demo.jwt.domain.auth.UserDetail;
 import com.noisyle.demo.jwt.utils.JwtUtils;
 
-/**
- * token校验
- * @author: JoeTao
- * createAt: 2018/9/14
- */
 @Component
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 

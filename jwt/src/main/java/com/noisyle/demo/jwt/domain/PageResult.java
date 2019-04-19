@@ -1,10 +1,5 @@
 package com.noisyle.demo.jwt.domain;
 
-/**
- * 分页结果DO
- * 
- * @author Joetao
- */
 public class PageResult<T> {
     private int page;
     private int rows;

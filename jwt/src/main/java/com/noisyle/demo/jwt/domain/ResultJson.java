@@ -2,11 +2,6 @@ package com.noisyle.demo.jwt.domain;
 
 import java.io.Serializable;
 
-/**
- * @author Joetao
- * RESTful API 返回类型
- * Created at 2018/3/8.
- */
 public class ResultJson<T> implements Serializable{
 
     private static final long serialVersionUID = 783015033603078674L;

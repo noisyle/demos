@@ -1,4 +1,4 @@
-package com.example.auth.demo.controller;
+package com.noisyle.demo.jwt.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.auth.demo.service.AuthService;
 import com.noisyle.demo.jwt.domain.ResultCode;
 import com.noisyle.demo.jwt.domain.ResultJson;
 import com.noisyle.demo.jwt.domain.auth.ResponseUserToken;
 import com.noisyle.demo.jwt.domain.auth.Role;
 import com.noisyle.demo.jwt.domain.auth.User;
 import com.noisyle.demo.jwt.domain.auth.UserDetail;
+import com.noisyle.demo.jwt.service.AuthService;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -61,7 +61,7 @@ public class AuthController {
 
     @PostMapping(value = "/sign")
     public ResultJson sign(@RequestBody User user) {
-        if (StringUtils.isAnyBlank(user.getName(), user.getPassword())) {
+        if (StringUtils.isEmpty(user.getName()) || StringUtils.isEmpty(user.getPassword())) {
             return ResultJson.failure(ResultCode.BAD_REQUEST);
         }
         UserDetail userDetail = new UserDetail(user.getName(), user.getPassword(), Role.builder().id(1l).build());

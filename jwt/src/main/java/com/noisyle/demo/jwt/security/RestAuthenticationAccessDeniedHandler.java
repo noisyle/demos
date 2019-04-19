@@ -14,10 +14,6 @@ import org.springframework.stereotype.Component;
 import com.noisyle.demo.jwt.domain.ResultCode;
 import com.noisyle.demo.jwt.domain.ResultJson;
 
-/**
- * @author: JoeTao
- * createAt: 2018/9/21
- */
 @Component("RestAuthenticationAccessDeniedHandler")
 public class RestAuthenticationAccessDeniedHandler implements AccessDeniedHandler {
     @Override

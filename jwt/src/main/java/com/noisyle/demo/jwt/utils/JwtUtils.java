@@ -21,12 +21,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.CompressionCodecs;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import net.minidev.json.JSONUtil;
 
-/**
- * @author: JoeTao
- * createAt: 2018/9/14
- */
 @Component
 public class JwtUtils {
     public static final String ROLE_REFRESH_TOKEN = "ROLE_REFRESH_TOKEN";

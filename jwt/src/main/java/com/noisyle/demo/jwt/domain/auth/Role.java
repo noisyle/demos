@@ -35,6 +35,11 @@ public class Role {
 
     static public class Builder {
         private Role obj = new Role();
+        
+        public Builder id(Long id) {
+            obj.id = id;
+            return this;
+        }
 
         public Builder name(String name) {
             obj.name = name;

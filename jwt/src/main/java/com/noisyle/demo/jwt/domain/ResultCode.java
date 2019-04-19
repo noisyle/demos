@@ -1,10 +1,5 @@
 package com.noisyle.demo.jwt.domain;
 
-/**
- * @author Joetao
- * 状态码
- * Created by jt on 2018/3/8.
- */
 public enum ResultCode {
     /*
     请求返回状态码和说明信息
