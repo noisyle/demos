@@ -1,8 +1,17 @@
 server:
-  port: 8000
+  port: 8001
 
-jwt:
-  header: Authorization
-  secret: P@ssw0rd
-  expiration: 86400
-  tokenHead: "Bearer "
+security:
+  jwt:
+    token:
+      secret-key: secret
+      expire-length: 3600000
+
+mock:
+  users:
+    - id: 1
+      username: user
+      password: 123456
+      roles:
+        - ROLE_USER
+        - ROLE_ADMIN
