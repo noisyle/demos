@@ -1,0 +1,15 @@
+server:
+  port: 8001
+
+weixin:
+  appId: wxd82c76df03ce05a8
+  appSecret: 266f7bb6cc2792b93b4868c699b5526f
+  token: xkd
+  encodingAESKey: nsgi7Q447t0IL3P7V06bFu8SFmfKVKsnYnhSn2xhPgC
+
+logging:
+  pattern:
+    console: '%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n'
+  level:
+    root: info
+    com.noisyle: debug

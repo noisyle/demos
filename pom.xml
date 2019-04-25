@@ -44,6 +44,7 @@
 		<module>scheduledtask</module>
 		<module>sqlinject</module>
 		<module>sse</module>
+		<module>weixin</module>
 		<module>zip</module>
 	</modules>
 
