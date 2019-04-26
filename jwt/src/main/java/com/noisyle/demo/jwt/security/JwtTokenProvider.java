@@ -40,7 +40,13 @@ public class JwtTokenProvider {
         claims.put("roles", roles);
         Date now = new Date();
         Date validity = new Date(now.getTime() + validityInMilliseconds);
-        return Jwts.builder().setClaims(claims).setIssuedAt(now).setExpiration(validity)
+
+        return Jwts.builder()
+                .claim("roles", roles)
+                .claim("some-other-payload", "some-other-payload")
+                .setSubject(username)
+                .setIssuedAt(now)
+                .setExpiration(validity)
                 .signWith(SignatureAlgorithm.HS256, secretKey).compact();
     }
 
@@ -51,6 +57,11 @@ public class JwtTokenProvider {
 
     public String getUsername(String token) {
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
+    }
+    
+    @SuppressWarnings("unchecked")
+    public <T> T getClaim(String token, String claimName) {
+        return (T) Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get(claimName);
     }
 
     public String resolveToken(HttpServletRequest req) {
