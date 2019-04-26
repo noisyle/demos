@@ -12,7 +12,7 @@ public class MessageSendRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        wxTemplateService.sendTemplateMessage();
+        wxTemplateService.sendTemplateMessage(new TemplateMessageParameter());
     }
 
 }

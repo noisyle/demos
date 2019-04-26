@@ -12,6 +12,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.template.WxMpTemplateData;
 import me.chanjar.weixin.mp.bean.template.WxMpTemplateMessage;
+import me.chanjar.weixin.mp.bean.template.WxMpTemplateMessage.MiniProgram;
 
 @Service
 public class WxTemplateService {
@@ -20,20 +21,31 @@ public class WxTemplateService {
     @Autowired
     private WxMpService wxMpService;
 
-    public void sendTemplateMessage() {
+    public void sendTemplateMessage(TemplateMessageParameter parameter) {
         try {
             logger.debug("Callback IPs: {}", (Object[]) wxMpService.getCallbackIP());
             logger.debug("Access Token: {}", wxMpService.getAccessToken());
             
             String openid = "oeWIJ44WO3p1Q3UYy2TQpdAyUwKA";
             String templateId = "RQp6kn1yvxbMIg1kyzQn4KziB71tCdzuQAy8ygiZReU";
-            String url = "http://wx14.chinanx.com/crmWeb/birthday/birthday.html?empId=4cb5ff4d3c4748a5b391c6d1e1050d3e";
+            String url = "http://ww.baidu.com";
+            
+            String miniProgramId = "1234";
+            String miniProgramPage = "pages/log/log";
             
             //发送微信消息
             WxMpTemplateMessage templateMessage = new WxMpTemplateMessage();
             templateMessage.setToUser(openid);
             templateMessage.setTemplateId(templateId);
+            
+            //跳转页面方式
             templateMessage.setUrl(url);
+            
+            //跳转小程序方式
+            MiniProgram miniProgram = new MiniProgram();
+            miniProgram.setAppid(miniProgramId);
+            miniProgram.setPagePath(miniProgramPage);
+            templateMessage.setMiniProgram(miniProgram);
             
             //模板内容
             templateMessage.addData(new WxMpTemplateData("first", "今天有客户过生日哦，祝福一下他（她）吧", "#000000"));
