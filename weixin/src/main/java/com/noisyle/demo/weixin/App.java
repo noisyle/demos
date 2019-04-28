@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.util.StringUtils;
 
+import me.chanjar.weixin.mp.api.WxMpConfigStorage;
 import me.chanjar.weixin.mp.api.WxMpInMemoryConfigStorage;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.impl.WxMpServiceImpl;
@@ -28,7 +29,7 @@ public class App {
     }
 
     @Bean
-    public WxMpInMemoryConfigStorage wxMpInMemoryConfigStorage() {
+    public WxMpConfigStorage wxMpInMemoryConfigStorage() {
         WxMpInMemoryConfigStorage wxMpConfigStorage = new WxMpInMemoryConfigStorage();
         wxMpConfigStorage.setAppId(appId);
         wxMpConfigStorage.setSecret(appSecret);
