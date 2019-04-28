@@ -2,10 +2,11 @@ server:
   port: 8001
 
 weixin:
-  appId: wxd82c76df03ce05a8
-  appSecret: 266f7bb6cc2792b93b4868c699b5526f
-  token: xkd
-  encodingAESKey: nsgi7Q447t0IL3P7V06bFu8SFmfKVKsnYnhSn2xhPgC
+  appId: 'wxd82c76df03ce05a8'
+  appSecret: '266f7bb6cc2792b93b4868c699b5526f'
+  token: 'xkd'
+  encodingAESKey: 'nsgi7Q447t0IL3P7V06bFu8SFmfKVKsnYnhSn2xhPgC'
+  accessToken: '20_e5bA8qTVvwIdVaKBAfPzeDv3-spSRymw3q2SO_WIViXFhGeEaZbqzWimEOFmbURBbMIBX-6PTKfBlpj5Jddf7BkbJoU9AKJWvvVlpDCL4ay5qBB0lfqFRmdqWpYQ40AzfR3lgyCTvHKa6NBwVUSjADAKJH'
 
 logging:
   pattern:
