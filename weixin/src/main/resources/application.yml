@@ -6,7 +6,7 @@ weixin:
   appSecret: '266f7bb6cc2792b93b4868c699b5526f'
   token: 'xkd'
   encodingAESKey: 'nsgi7Q447t0IL3P7V06bFu8SFmfKVKsnYnhSn2xhPgC'
-  accessToken: '20_e5bA8qTVvwIdVaKBAfPzeDv3-spSRymw3q2SO_WIViXFhGeEaZbqzWimEOFmbURBbMIBX-6PTKfBlpj5Jddf7BkbJoU9AKJWvvVlpDCL4ay5qBB0lfqFRmdqWpYQ40AzfR3lgyCTvHKa6NBwVUSjADAKJH'
+  accessToken: '21_cma4kWuNGE0iXARnjv_B2HHYPChXltt0qPC505qLSpZrR3Ms29QBgDewbEd1R33l4CIIpfEyy1MKuL3WTRf3nbqPDN_4T6FPggFvXbkOuF2oXBl3xCp3PhSw3ikfHvxKA6HtNZjhvFRsKVYnWCCiAEAEKK'
 
 logging:
   pattern:

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.noisyle.demo.weixin.WxTemplateMessage.Forward;
+import com.noisyle.demo.weixin.WxTemplateMessage.WxTemplateMessageData;
 
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
@@ -14,7 +15,7 @@ import me.chanjar.weixin.mp.bean.template.WxMpTemplateMessage;
 import me.chanjar.weixin.mp.bean.template.WxMpTemplateMessage.MiniProgram;
 
 @Service
-public class WxTemplateService {
+public class WxTemplateServiceImpl implements IWxTemplateService {
     private Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
@@ -22,8 +23,11 @@ public class WxTemplateService {
 
     /**
      * 发送模板消息
-     * @param param 请求参数
+     * 
+     * @param param
+     *            请求参数
      */
+    @Override
     public void sendTemplateMessage(WxTemplateMessage param) {
         try {
             logger.debug("Access Token: {}", wxMpService.getAccessToken());
@@ -51,8 +55,8 @@ public class WxTemplateService {
             }
 
             // 模板内容
-            for (WxMpTemplateData data : param.getData()) {
-                templateMessage.addData(data);
+            for (WxTemplateMessageData data : param.getData()) {
+                templateMessage.addData(new WxMpTemplateData(data.getName(), data.getValue(), data.getColor()));
             }
 
             // 调用sdk发送方法

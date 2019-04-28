@@ -14,7 +14,7 @@ public class MessageSendRunner implements CommandLineRunner {
     private Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    private WxTemplateService wxTemplateService;
+    private IWxTemplateService wxTemplateService;
 
     @Override
     public void run(String... args) throws Exception {

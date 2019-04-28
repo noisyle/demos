@@ -3,8 +3,6 @@ package com.noisyle.demo.weixin;
 import java.util.LinkedList;
 import java.util.List;
 
-import me.chanjar.weixin.mp.bean.template.WxMpTemplateData;
-
 public class WxTemplateMessage {
     public static enum Forward {
         URL, MINI_PROGRAM;
@@ -16,7 +14,7 @@ public class WxTemplateMessage {
     private String url;
     private String miniProgramId;
     private String miniProgramPage;
-    private List<WxMpTemplateData> data = new LinkedList<WxMpTemplateData>();
+    private List<WxTemplateMessageData> data = new LinkedList<WxTemplateMessageData>();
 
     public String getOpenId() {
         return openId;
@@ -66,11 +64,11 @@ public class WxTemplateMessage {
         this.miniProgramPage = miniProgramPage;
     }
 
-    public List<WxMpTemplateData> getData() {
+    public List<WxTemplateMessageData> getData() {
         return data;
     }
 
-    public void setData(List<WxMpTemplateData> data) {
+    public void setData(List<WxTemplateMessageData> data) {
         this.data = data;
     }
 
@@ -79,6 +77,56 @@ public class WxTemplateMessage {
         return "TemplateMessageParameter [openId=" + openId + ", templateId=" + templateId + ", forward=" + forward
                 + ", url=" + url + ", miniProgramId=" + miniProgramId + ", miniProgramPage=" + miniProgramPage
                 + ", data=" + data + "]";
+    }
+
+    public static class WxTemplateMessageData {
+        private String name;
+        private String value;
+        private String color;
+
+        public WxTemplateMessageData() {
+        }
+
+        public WxTemplateMessageData(String name, String value) {
+            this.name = name;
+            this.value = value;
+        }
+
+        public WxTemplateMessageData(String name, String value, String color) {
+            this.name = name;
+            this.value = value;
+            this.color = color;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getValue() {
+            return value;
+        }
+
+        public void setValue(String value) {
+            this.value = value;
+        }
+
+        public String getColor() {
+            return color;
+        }
+
+        public void setColor(String color) {
+            this.color = color;
+        }
+
+        @Override
+        public String toString() {
+            return "WxTemplateMessageData [name=" + name + ", value=" + value + ", color=" + color + "]";
+        }
+
     }
 
     public static Builder builder() {
@@ -119,12 +167,12 @@ public class WxTemplateMessage {
         }
 
         public Builder data(String name, String value) {
-            param.data.add(new WxMpTemplateData(name, value));
+            param.data.add(new WxTemplateMessageData(name, value));
             return this;
         }
 
         public Builder data(String name, String value, String color) {
-            param.data.add(new WxMpTemplateData(name, value, color));
+            param.data.add(new WxTemplateMessageData(name, value, color));
             return this;
         }
 
