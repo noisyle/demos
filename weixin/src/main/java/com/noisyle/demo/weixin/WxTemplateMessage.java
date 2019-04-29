@@ -4,33 +4,75 @@ import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * 模板消息对象
+ */
 public class WxTemplateMessage implements Serializable {
     private static final long serialVersionUID = -9067478715802736665L;
 
+    /**
+     * 跳转类型
+     */
     public static enum Forward {
-        URL, MINI_PROGRAM;
+        /**
+         * 跳转URL
+         */
+        URL, 
+        /**
+         * 跳转小程序
+         */
+        MINI_PROGRAM;
     }
 
+    /**
+     * 公众号关注用户openId
+     */
     private String openId;
+    /**
+     * 模板id
+     */
     private String templateId;
+    /**
+     * 跳转类型
+     */
     private Forward forward;
+    /**
+     * 跳转url地址
+     */
     private String url;
+    /**
+     * 跳转小程序id
+     */
     private String miniProgramId;
+    /**
+     * 跳转小程序页面
+     */
     private String miniProgramPage;
+    /**
+     * 模板数据
+     */
     private List<WxTemplateMessageData> data = new LinkedList<WxTemplateMessageData>();
 
     public String getOpenId() {
         return openId;
     }
 
+    /**
+     * 设置公众号关注用户openId
+     * @param openId 公众号关注用户openId
+     */
     public void setOpenId(String openId) {
         this.openId = openId;
     }
-
     public String getTemplateId() {
         return templateId;
     }
 
+
+    /**
+     * 设置模板id
+     * @param templateId 模板id
+     */
     public void setTemplateId(String templateId) {
         this.templateId = templateId;
     }
@@ -39,6 +81,10 @@ public class WxTemplateMessage implements Serializable {
         return forward;
     }
 
+    /**
+     * 设置跳转类型(url/小程序)
+     * @param forward 跳转类型
+     */
     public void setForward(Forward forward) {
         this.forward = forward;
     }
@@ -47,6 +93,10 @@ public class WxTemplateMessage implements Serializable {
         return url;
     }
 
+    /**
+     * 设置跳转url
+     * @param url 跳转url
+     */
     public void setUrl(String url) {
         this.url = url;
     }
@@ -55,6 +105,10 @@ public class WxTemplateMessage implements Serializable {
         return miniProgramId;
     }
 
+    /**
+     * 设置跳转小程序id
+     * @param miniProgramId 跳转小程序id
+     */
     public void setMiniProgramId(String miniProgramId) {
         this.miniProgramId = miniProgramId;
     }
@@ -63,6 +117,10 @@ public class WxTemplateMessage implements Serializable {
         return miniProgramPage;
     }
 
+    /**
+     * 设置跳转小程序页面
+     * @param miniProgramPage 跳转小程序页面
+     */
     public void setMiniProgramPage(String miniProgramPage) {
         this.miniProgramPage = miniProgramPage;
     }
@@ -71,6 +129,10 @@ public class WxTemplateMessage implements Serializable {
         return data;
     }
 
+    /**
+     * 设置模板数据
+     * @param data 模板数据列表
+     */
     public void setData(List<WxTemplateMessageData> data) {
         this.data = data;
     }
@@ -139,47 +201,88 @@ public class WxTemplateMessage implements Serializable {
 
     public static class Builder {
         private WxTemplateMessage param = new WxTemplateMessage();
-
+        
+        /**
+         * 设置公众号关注用户openId
+         * @param openId 公众号关注用户openId
+         */
         public Builder openId(String openId) {
             param.openId = openId;
             return this;
         }
 
+        /**
+         * 设置模板id
+         * @param templateId 模板id
+         */
         public Builder templateId(String templateId) {
             param.templateId = templateId;
             return this;
         }
 
+        /**
+         * 设置跳转类型(url/小程序)
+         * @param forward 跳转类型
+         */
         public Builder forward(Forward forward) {
             param.forward = forward;
             return this;
         }
 
+        /**
+         * 设置跳转url
+         * @param url 跳转url
+         */
         public Builder url(String url) {
             param.url = url;
             return this;
         }
 
+        /**
+         * 设置跳转小程序id
+         * @param miniProgramId 跳转小程序id
+         */
         public Builder miniProgramId(String miniProgramId) {
             param.miniProgramId = miniProgramId;
             return this;
         }
 
+        /**
+         * 设置跳转小程序页面
+         * @param miniProgramPage 跳转小程序页面
+         */
         public Builder miniProgramPage(String miniProgramPage) {
             param.miniProgramPage = miniProgramPage;
             return this;
         }
 
+        /**
+         * 添加模板数据
+         * @param name 占位符名称
+         * @param value 字符串
+         * @return
+         */
         public Builder data(String name, String value) {
             param.data.add(new WxTemplateMessageData(name, value));
             return this;
         }
 
+        /**
+         * 添加模板数据
+         * @param name 占位符名称
+         * @param value 字符串
+         * @param color 文字颜色，如#000000
+         * @return
+         */
         public Builder data(String name, String value, String color) {
             param.data.add(new WxTemplateMessageData(name, value, color));
             return this;
         }
 
+        /**
+         * 构造{@link WxTemplateMessage}模板消息对象
+         * @return 模板消息对象
+         */
         public WxTemplateMessage build() {
             return param;
         }
