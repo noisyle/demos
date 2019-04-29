@@ -1,9 +1,12 @@
 package com.noisyle.demo.weixin;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
-public class WxTemplateMessage {
+public class WxTemplateMessage implements Serializable {
+    private static final long serialVersionUID = -9067478715802736665L;
+
     public static enum Forward {
         URL, MINI_PROGRAM;
     }
@@ -79,7 +82,8 @@ public class WxTemplateMessage {
                 + ", data=" + data + "]";
     }
 
-    public static class WxTemplateMessageData {
+    public static class WxTemplateMessageData implements Serializable {
+        private static final long serialVersionUID = -4991038401301809995L;
         private String name;
         private String value;
         private String color;
