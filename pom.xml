@@ -36,6 +36,7 @@
 		<module>lambda</module>
 		<module>lucene</module>
 		<module>multidatasource</module>
+		<module>multidatasource2</module>
 		<module>netty</module>
 		<module>pdfjs</module>
 		<module>qrcode</module>
