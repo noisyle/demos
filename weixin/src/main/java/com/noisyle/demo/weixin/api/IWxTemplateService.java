@@ -1,4 +1,6 @@
-package com.noisyle.demo.weixin;
+package com.noisyle.demo.weixin.api;
+
+import com.noisyle.demo.weixin.bean.WxTemplateMessage;
 
 public interface IWxTemplateService {
 

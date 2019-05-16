@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import com.noisyle.demo.weixin.api.IWxTemplateService;
+import com.noisyle.demo.weixin.bean.WxTemplateMessage;
+
 @Component
 public class MessageSendRunner implements CommandLineRunner {
     private Logger logger = LoggerFactory.getLogger(getClass());
@@ -19,14 +22,15 @@ public class MessageSendRunner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         WxTemplateMessage param = WxTemplateMessage.builder()
-            .openId("oMd100jVZh9BiuKeh3QpfOga2Axo")
+            .openId("oMd100v3SSwRIS0wPt7HAsijXp9w")
             .templateId("RQp6kn1yvxbMIg1kyzQn4KziB71tCdzuQAy8ygiZReU")
-            .forward(WxTemplateMessage.Forward.URL)
+            .miniProgramId("wx1dbb807009381bc6")
+            .miniProgramPage("team/pages/msgList/msgList")
             .url("http://www.baidu.com")
-            .data("first", "今天有客户过生日哦，祝福一下他（她）吧", "#000000")
+            .data("first", "提醒正文", "#000000")
             .data("keyword1", new SimpleDateFormat("yyyy-MM-dd").format(new Date()), "#000000")
-            .data("keyword2", "客户 黑卫士 于今天过生日", "#000000")
-            .data("remark","客户关系维护，一句简单的'生日快乐'开始吧。点击查看详情", "#000000")
+            .data("keyword2", "提醒内容正文", "#000000")
+            .data("remark","提醒备注", "#000000")
             .build();
         
         logger.debug("发送参数：{}", param);

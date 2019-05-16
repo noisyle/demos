@@ -1,12 +1,13 @@
-package com.noisyle.demo.weixin;
+package com.noisyle.demo.weixin.api.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.noisyle.demo.weixin.WxTemplateMessage.Forward;
-import com.noisyle.demo.weixin.WxTemplateMessage.WxTemplateMessageData;
+import com.noisyle.demo.weixin.api.IWxTemplateService;
+import com.noisyle.demo.weixin.bean.WxTemplateMessage;
+import com.noisyle.demo.weixin.bean.WxTemplateMessage.WxTemplateMessageData;
 
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
@@ -25,7 +26,7 @@ public class WxTemplateServiceImpl implements IWxTemplateService {
      * 发送模板消息
      * 
      * @param param
-     *            请求参数
+     *            请求参数 {@link WxTemplateMessage}
      */
     @Override
     public void sendTemplateMessage(WxTemplateMessage param) {
@@ -37,22 +38,14 @@ public class WxTemplateServiceImpl implements IWxTemplateService {
             templateMessage.setToUser(param.getOpenId());
             templateMessage.setTemplateId(param.getTemplateId());
 
-            Forward forward = param.getForward();
-            switch (forward) {
-            case URL:
-                // 跳转页面方式
-                templateMessage.setUrl(param.getUrl());
-                break;
-            case MINI_PROGRAM:
-                // 跳转小程序方式
-                MiniProgram miniProgram = new MiniProgram();
-                miniProgram.setAppid(param.getMiniProgramId());
-                miniProgram.setPagePath(param.getMiniProgramPage());
-                templateMessage.setMiniProgram(miniProgram);
-                break;
-            default:
-                break;
-            }
+            // 跳转小程序
+            MiniProgram miniProgram = new MiniProgram();
+            miniProgram.setAppid(param.getMiniProgramId());
+            miniProgram.setPagePath(param.getMiniProgramPage());
+            templateMessage.setMiniProgram(miniProgram);
+            
+            // 跳转页面，如果与跳转小程序同时设置，则优先跳转小程序，不支持时才跳转页面
+            templateMessage.setUrl(param.getUrl());
 
             // 模板内容
             for (WxTemplateMessageData data : param.getData()) {

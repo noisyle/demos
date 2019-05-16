@@ -1,9 +1,6 @@
-server:
-  port: 8001
-
 weixin:
   appId: 'wxd82c76df03ce05a8'
-  appSecret: '266f7bb6cc2792b93b4868c699b5526f'
+  appSecret: 'ef8f44a595775408907aee4b6088c045'
   token: 'xkd'
   encodingAESKey: 'nsgi7Q447t0IL3P7V06bFu8SFmfKVKsnYnhSn2xhPgC'
   accessToken: '21_cma4kWuNGE0iXARnjv_B2HHYPChXltt0qPC505qLSpZrR3Ms29QBgDewbEd1R33l4CIIpfEyy1MKuL3WTRf3nbqPDN_4T6FPggFvXbkOuF2oXBl3xCp3PhSw3ikfHvxKA6HtNZjhvFRsKVYnWCCiAEAEKK'

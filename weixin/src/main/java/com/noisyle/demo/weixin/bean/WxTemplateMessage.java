@@ -1,4 +1,4 @@
-package com.noisyle.demo.weixin;
+package com.noisyle.demo.weixin.bean;
 
 import java.io.Serializable;
 import java.util.LinkedList;
@@ -11,20 +11,6 @@ public class WxTemplateMessage implements Serializable {
     private static final long serialVersionUID = -9067478715802736665L;
 
     /**
-     * 跳转类型
-     */
-    public static enum Forward {
-        /**
-         * 跳转URL
-         */
-        URL, 
-        /**
-         * 跳转小程序
-         */
-        MINI_PROGRAM;
-    }
-
-    /**
      * 公众号关注用户openId
      */
     private String openId;
@@ -32,10 +18,6 @@ public class WxTemplateMessage implements Serializable {
      * 模板id
      */
     private String templateId;
-    /**
-     * 跳转类型
-     */
-    private Forward forward;
     /**
      * 跳转url地址
      */
@@ -75,18 +57,6 @@ public class WxTemplateMessage implements Serializable {
      */
     public void setTemplateId(String templateId) {
         this.templateId = templateId;
-    }
-
-    public Forward getForward() {
-        return forward;
-    }
-
-    /**
-     * 设置跳转类型(url/小程序)
-     * @param forward 跳转类型
-     */
-    public void setForward(Forward forward) {
-        this.forward = forward;
     }
 
     public String getUrl() {
@@ -139,7 +109,7 @@ public class WxTemplateMessage implements Serializable {
 
     @Override
     public String toString() {
-        return "TemplateMessageParameter [openId=" + openId + ", templateId=" + templateId + ", forward=" + forward
+        return "TemplateMessageParameter [openId=" + openId + ", templateId=" + templateId
                 + ", url=" + url + ", miniProgramId=" + miniProgramId + ", miniProgramPage=" + miniProgramPage
                 + ", data=" + data + "]";
     }
@@ -221,16 +191,7 @@ public class WxTemplateMessage implements Serializable {
         }
 
         /**
-         * 设置跳转类型(url/小程序)
-         * @param forward 跳转类型
-         */
-        public Builder forward(Forward forward) {
-            param.forward = forward;
-            return this;
-        }
-
-        /**
-         * 设置跳转url
+         * 设置跳转url，如果与跳转小程序同时设置，则优先跳转小程序，不支持时才跳转url
          * @param url 跳转url
          */
         public Builder url(String url) {
