@@ -1,4 +1,4 @@
-package com.noisyle.demo.websocket;
+package com.noisyle.demo.websocket.controller;
 
 import java.util.Date;
 import java.util.HashMap;

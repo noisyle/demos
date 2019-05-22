@@ -1,4 +1,4 @@
-package com.noisyle.demo.websocket;
+package com.noisyle.demo.websocket.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;

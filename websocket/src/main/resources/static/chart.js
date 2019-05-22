@@ -18,7 +18,7 @@ var option = {
 function connect() {
 	var socket = new SockJS('/websocket-endpoint');
 	stompClient = Stomp.over(socket);
-	stompClient.connect({}, function(frame) {
+	stompClient.connect({'token': 'MY_TOKEN'}, function(frame) {
 		console.log('Connected: ' + frame);
 		stompClient.subscribe('/topic/linechart', function(res) {
 			updateChart(JSON.parse(res.body).data);

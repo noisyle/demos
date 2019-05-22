@@ -14,7 +14,7 @@ function setConnected(connected) {
 function connect() {
 	var socket = new SockJS('/websocket-endpoint');
 	stompClient = Stomp.over(socket);
-	stompClient.connect({}, function(frame) {
+	stompClient.connect({'token': 'MY_TOKEN'}, function(frame) {
 		setConnected(true);
 		console.log('Connected: ' + frame);
 		stompClient.subscribe('/topic/greetings', function(greeting) {
