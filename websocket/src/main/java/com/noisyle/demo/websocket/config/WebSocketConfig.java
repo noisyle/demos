@@ -15,6 +15,7 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
     public void configureMessageBroker(MessageBrokerRegistry config) {
         // 仅当客户端不使用SockJS时(如微信小程序)，添加setTaskScheduler和setHeartbeatValue设置，由stomp协商heartbeat。
         // 否则可以不设置，由SockJS自行协商heartbeat。
+        // https://stackoverflow.com/a/42308169
         ThreadPoolTaskScheduler ts = new ThreadPoolTaskScheduler();
         ts.setThreadNamePrefix("wss-heartbeat-thread-");
         ts.initialize();
