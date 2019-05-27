@@ -1,21 +1,10 @@
 server:
   port: 8000
 
-# Logging
 logging:
   pattern:
     console: '%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n'
-  file: ${user.home}/logs/${spring.application.name}-${server.port}.log
   level:
-    root: info
-    org.springframework.web: debug
-    com.noisyle: debug
-
-# Tomcat Access Logging
-server:
-  tomcat:
-    accesslog:
-      enabled: true
-      directory: ${user.home}/logs/
-      prefix: ${spring.application.name}-${server.port}_access
-      pattern: '%t %a "%r" %s (%D ms)\n "%{User-Agent}i"'
+    root: INFO
+    org.springframework.web: DEBUG
+    com.noisyle: DEBUG
