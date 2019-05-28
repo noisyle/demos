@@ -30,7 +30,7 @@ public class WebSocketController {
         return new Greeting(message.getName(), new Date().getTime());
     }
 
-    @Scheduled(fixedDelay = 1000)
+    @Scheduled(fixedDelay = 10000)
     public void updateLineChart() {
         Map<String, Object> res = new HashMap<String, Object>();
         res.put("data", new Random().nextInt(500) + 800);
