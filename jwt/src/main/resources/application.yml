@@ -4,7 +4,7 @@ server:
 security:
   jwt:
     token:
-      secret-key: secret
+      secret-key: 12345678901234567890123456789012
       expire-length: 3600000
 
 mock:

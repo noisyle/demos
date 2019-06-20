@@ -1,6 +1,6 @@
 package com.noisyle.demo.jwt.security;
 
-import java.util.Base64;
+import java.security.Key;
 import java.util.Date;
 import java.util.List;
 
@@ -21,19 +21,22 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 
 @Component
 public class JwtTokenProvider {
-    @Value("${security.jwt.token.secret-key:secret}")
-    private String secretKey = "secret";
-    @Value("${security.jwt.token.expire-length:3600000}")
+    @Value("${security.jwt.token.secret-key}")
+    private String secretKey;
+    @Value("${security.jwt.token.expire-length}")
     private long validityInMilliseconds = 3600000;
     @Autowired
     private UserDetailsService userDetailsService;
+    
+    private Key key;
 
     @PostConstruct
     protected void init() {
-        secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
+        key = Keys.hmacShaKeyFor(secretKey.getBytes());
     }
 
     public String createToken(String username, List<String> roles) {
@@ -43,12 +46,13 @@ public class JwtTokenProvider {
         Date validity = new Date(now.getTime() + validityInMilliseconds);
 
         return Jwts.builder()
+                .signWith(key, SignatureAlgorithm.HS256)
+                .setSubject(username)
                 .claim("roles", roles)
                 .claim("some-other-payload", "some-other-payload")
-                .setSubject(username)
                 .setIssuedAt(now)
                 .setExpiration(validity)
-                .signWith(SignatureAlgorithm.HS256, secretKey).compact();
+                .compact();
     }
 
     public Authentication getAuthentication(String token) {
@@ -57,12 +61,12 @@ public class JwtTokenProvider {
     }
 
     public String getUsername(String token) {
-        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
+        return Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody().getSubject();
     }
     
     @SuppressWarnings("unchecked")
     public <T> T getClaim(String token, String claimName) {
-        return (T) Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get(claimName);
+        return (T) Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody().get(claimName);
     }
 
     public String resolveToken(HttpServletRequest req) {
@@ -75,7 +79,7 @@ public class JwtTokenProvider {
 
     public boolean validateToken(String token) {
         try {
-            Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+            Jws<Claims> claims = Jwts.parser().setSigningKey(key).parseClaimsJws(token);
             if (claims.getBody().getExpiration().before(new Date())) {
                 return false;
             }
