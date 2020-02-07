@@ -54,7 +54,7 @@ public class AppTest {
 class MyTestConfiguration {
     // 加载测试数据
     @Bean
-    public DataSourceInitializer dataSource1Initializer(@Qualifier("db1DataSource") DataSource dataSource) {
+    public DataSourceInitializer dataSource1Initializer(@Qualifier("dataSource1") DataSource dataSource) {
         ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator();
         resourceDatabasePopulator.addScript(new ClassPathResource("db1-schema.sql"));
         resourceDatabasePopulator.addScript(new ClassPathResource("db1-data.sql"));
@@ -66,7 +66,7 @@ class MyTestConfiguration {
     }
 
     @Bean
-    public DataSourceInitializer dataSource2Initializer(@Qualifier("db2DataSource") DataSource dataSource) {
+    public DataSourceInitializer dataSource2Initializer(@Qualifier("dataSource2") DataSource dataSource) {
         ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator();
         resourceDatabasePopulator.addScript(new ClassPathResource("db2-schema.sql"));
         resourceDatabasePopulator.addScript(new ClassPathResource("db2-data.sql"));

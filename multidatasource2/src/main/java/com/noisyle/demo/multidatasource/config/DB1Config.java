@@ -17,9 +17,9 @@ import com.noisyle.demo.multidatasource.annotation.DB1;
 public class DB1Config {
 
     @Bean
-    @ConfigurationProperties(prefix = "db.db1")
+    @ConfigurationProperties(prefix = "dataSource.db1")
     @Primary
-    public DataSource db1DataSource() {
+    public DataSource dataSource1() {
         return DataSourceBuilder.create().build();
     }
 
@@ -28,7 +28,7 @@ public class DB1Config {
     @Primary
     public SqlSessionFactoryBean db1SqlSessionFactory() {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
-        sqlSessionFactoryBean.setDataSource(db1DataSource());
+        sqlSessionFactoryBean.setDataSource(dataSource1());
         return sqlSessionFactoryBean;
     }
 }

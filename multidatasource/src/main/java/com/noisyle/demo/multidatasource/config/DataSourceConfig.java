@@ -22,13 +22,13 @@ import com.zaxxer.hikari.HikariDataSource;
 public class DataSourceConfig {
 
     @Bean
-    @ConfigurationProperties(prefix = "db.db1")
+    @ConfigurationProperties(prefix = "dataSource.db1")
     public DataSource dataSource1() {
         return new HikariDataSource();
     }
 
     @Bean
-    @ConfigurationProperties(prefix = "db.db2")
+    @ConfigurationProperties(prefix = "dataSource.db2")
     public DataSource dataSource2() {
         return new HikariDataSource();
     }

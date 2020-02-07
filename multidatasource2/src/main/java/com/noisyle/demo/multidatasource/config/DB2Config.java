@@ -16,8 +16,8 @@ import com.noisyle.demo.multidatasource.annotation.DB2;
 public class DB2Config {
 
     @Bean
-    @ConfigurationProperties(prefix = "db.db2")
-    public DataSource db2DataSource() {
+    @ConfigurationProperties(prefix = "dataSource.db2")
+    public DataSource dataSource2() {
         return DataSourceBuilder.create().build();
     }
 
@@ -25,7 +25,7 @@ public class DB2Config {
     @ConfigurationProperties(prefix = "mybatis")
     public SqlSessionFactoryBean db2SqlSessionFactory() {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
-        sqlSessionFactoryBean.setDataSource(db2DataSource());
+        sqlSessionFactoryBean.setDataSource(dataSource2());
         return sqlSessionFactoryBean;
     }
 }
