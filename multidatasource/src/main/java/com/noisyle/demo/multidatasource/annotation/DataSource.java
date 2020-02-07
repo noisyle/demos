@@ -5,8 +5,10 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import com.noisyle.demo.multidatasource.datasource.MultipleDataSource;
+
 @Target({ ElementType.TYPE, ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface DataSource {
-    String value() default "";
+    MultipleDataSource.Target value() default MultipleDataSource.Target.DB1;
 }

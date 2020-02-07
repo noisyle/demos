@@ -23,6 +23,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.noisyle.demo.multidatasource.entity.User;
 import com.noisyle.demo.multidatasource.repository.DB1UserRepository;
 import com.noisyle.demo.multidatasource.repository.DB2UserRepository;
+import com.noisyle.demo.multidatasource.service.UserService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -34,6 +35,8 @@ public class AppTest {
     private DB1UserRepository repo1;
     @Autowired
     private DB2UserRepository repo2;
+    @Autowired
+    private UserService service;
     
     @Test
     public void test1() {
@@ -47,6 +50,15 @@ public class AppTest {
         List<User> list = repo2.findAll();
         Assert.assertNotNull(list);
         logger.debug("result: {}", list);
+    }
+    
+    @Test
+    public void test3() {
+        List<User> list = service.getList();
+        logger.debug("result: {}", list);
+        Assert.assertNotNull(list);
+        Assert.assertEquals(list.size(), 2);
+        Assert.assertNotEquals(list.get(0).getName(), list.get(1).getName());
     }
 }
 

@@ -7,6 +7,7 @@ import javax.sql.DataSource;
 
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +15,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.Primary;
 
 import com.noisyle.demo.multidatasource.datasource.MultipleDataSource;
-import com.zaxxer.hikari.HikariDataSource;
+import com.noisyle.demo.multidatasource.datasource.MultipleDataSource.Target;
 
 @Configuration
 @MapperScan(basePackages = "com.noisyle.demo.multidatasource.repository", sqlSessionFactoryRef = "sqlSessionFactory")
@@ -24,13 +25,13 @@ public class DataSourceConfig {
     @Bean
     @ConfigurationProperties(prefix = "dataSource.db1")
     public DataSource dataSource1() {
-        return new HikariDataSource();
+        return DataSourceBuilder.create().build();
     }
 
     @Bean
     @ConfigurationProperties(prefix = "dataSource.db2")
     public DataSource dataSource2() {
-        return new HikariDataSource();
+        return DataSourceBuilder.create().build();
     }
 
     @Bean
@@ -38,11 +39,11 @@ public class DataSourceConfig {
     public DataSource dataSource() {
         MultipleDataSource dataSource = new MultipleDataSource();
 
-        dataSource.setDefaultTargetDataSource(dataSource1());
         Map<Object, Object> dsMap = new HashMap<>();
-        dsMap.put("db1", dataSource1());
-        dsMap.put("db2", dataSource2());
+        dsMap.put(Target.DB1, dataSource1());
+        dsMap.put(Target.DB2, dataSource2());
         dataSource.setTargetDataSources(dsMap);
+        dataSource.setDefaultTargetDataSource(dataSource1());
 
         return dataSource;
     }

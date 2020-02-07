@@ -14,12 +14,13 @@ import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
 
 import com.noisyle.demo.multidatasource.annotation.DataSource;
+import com.noisyle.demo.multidatasource.datasource.MultipleDataSource.Target;
 
 @Aspect
 @Component
 public class MultipleDataSourceAspect {
     final static private Logger logger = LoggerFactory.getLogger(MultipleDataSourceAspect.class);
-    
+
     @Pointcut("execution(* com.noisyle.demo.multidatasource.repository..*(..))")
     public void pointcut() {
     }
@@ -30,20 +31,20 @@ public class MultipleDataSourceAspect {
         Class<?> className = point.getTarget().getClass();
         String methodName = point.getSignature().getName();
         Class<?>[] argClass = ((MethodSignature) point.getSignature()).getParameterTypes();
-        String dataSourceType = null;
+        Target dataSourceType = null;
         DataSource annotation = null;
         try {
             Method method = className.getMethod(methodName, argClass);
             annotation = AnnotationUtils.findAnnotation(method, DataSource.class);
             logger.debug("DataSource annotation of method: {}", annotation);
-            if(annotation!=null) {
+            if (annotation != null) {
                 dataSourceType = annotation.value();
                 MultipleDataSource.setDataSourceType(dataSourceType);
                 return;
             }
             annotation = AnnotationUtils.findAnnotation(className, DataSource.class);
             logger.debug("DataSource annotation of class: {}", annotation);
-            if(annotation!=null) {
+            if (annotation != null) {
                 dataSourceType = annotation.value();
                 MultipleDataSource.setDataSourceType(dataSourceType);
                 return;
