@@ -23,6 +23,7 @@
 		<module>concurrent</module>
 		<module>distributed</module>
 		<module>druid</module>
+        <module>font</module>
 		<module>fovalidation</module>
 		<module>freemarker</module>
 		<module>guice</module>
