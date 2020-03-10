@@ -10,8 +10,10 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.WritableRaster;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Base64;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -149,7 +151,6 @@ public class PosterBuilder {
      * 构造海报
      * @return BufferedImage 海报图片
      * @throws IOException
-     * @throws FontFormatException
      */
     public BufferedImage buildImage() throws IOException {
         // 初始高度
@@ -203,6 +204,19 @@ public class PosterBuilder {
 
         graphics.dispose();
         return image;
+    }
+    
+    /**
+     * 构造海报
+     * @return String 海报图片Base64编码
+     * @throws IOException
+     */
+    public String buildBase64() throws IOException {
+        BufferedImage image = buildImage();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.write(image, "png", baos);
+        String imageString = "data:image/png;base64," + Base64.getEncoder().encodeToString(baos.toByteArray());
+        return imageString;
     }
 
     static public class IllustBuilder {
@@ -476,6 +490,11 @@ class Nickname extends PosterElement {
  * 小程序码和slogan
  */
 class Qrcode extends PosterElement {
+    // 小程序码图片
+    final private String QRCODE_PATH = "image/qrcode.png";
+    // slogan图片
+    final private String SLOGAN_PATH = "image/qrcode_slogan.png";
+            
     @Override
     public void internalBuild(PosterBuilder parent) throws IOException {
         this.setWidth(parent.getWidth());
@@ -488,9 +507,9 @@ class Qrcode extends PosterElement {
         // 消除画图锯齿
         graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         
-        BufferedImage qrcode = Utils.resize(ImageIO.read(new ClassPathResource("image/qrcode.png").getInputStream()), 100);
+        BufferedImage qrcode = Utils.resize(ImageIO.read(new ClassPathResource(QRCODE_PATH).getInputStream()), 100);
         graphics.drawImage(qrcode, 40, parent.getHeight() - 40 - 100, null);
-        BufferedImage slogan = Utils.resize(ImageIO.read(new ClassPathResource("image/qrcode_slogan.png").getInputStream()), 331);
+        BufferedImage slogan = Utils.resize(ImageIO.read(new ClassPathResource(SLOGAN_PATH).getInputStream()), 331);
         graphics.drawImage(slogan, 165, parent.getHeight() - 94 - 24, null);
 
         graphics.dispose();
