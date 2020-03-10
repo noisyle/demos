@@ -27,7 +27,7 @@ public class ImageController {
     private String boldFont = "";
 
     @RequestMapping("/image")
-    public void createPoster(HttpServletResponse res) {
+    public void getPosterImage(HttpServletResponse res) {
         String illust = "image/illust.png";
         String article = "无论过去发生过什么，你要相信，最好的尚未到来。即使生活给你一千个伤心的理由。你也要找一千零一个开心的借口，不管这世界多么残酷，都要保持一颗释然的心，用你的笑容冰释所有冷漠，睡前原谅所有的人与事情。";
         String nickname = "冷风吹过川普的头发";
@@ -35,13 +35,19 @@ public class ImageController {
         try {
             // 调用工具类生成海报
             BufferedImage image = new PosterBuilder()
-                .setWidth(670)
-                .setNickname(nickname)
-//                .setRegularFontPath(regularFont)
-//                .setBoldFontPath(boldFont)
-                .illust().path(illust).and()
-                .article().text(article).and()
-                .buildImage();
+                    // 普通字体
+//                    .setRegularFontPath(regularFont)
+                    // 粗体字体
+//                    .setBoldFontPath(boldFont)
+                    // 设置海报宽度
+                    .setWidth(670)
+                    // 设置插图
+                    .illust().path(illust).and()
+                    // 设置文本
+                    .article().text(article).and()
+                    // 用户昵称
+                    .setNickname(nickname)
+                    .buildImage();
             
             res.setContentType("image/png");
             res.setHeader("Pragma", "no-cache");
