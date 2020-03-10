@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-public class ImageController {
-    final static private Logger logger = LoggerFactory.getLogger(ImageController.class);
+public class PosterController {
+    final static private Logger logger = LoggerFactory.getLogger(PosterController.class);
     
     /**
      * 从配置文件注入标准字体文件路径
@@ -31,6 +31,10 @@ public class ImageController {
     @Value("${poster.bold-font}")
     private String boldFont = "";
 
+    /**
+     * 演示调用工具类生成海报图片
+     * @param res 用来输出二进制流
+     */
     @RequestMapping("/image")
     public void getPosterImage(HttpServletResponse res) {
         String illust = "image/illust.png";
@@ -63,6 +67,10 @@ public class ImageController {
         }
     }
 
+
+    /**
+     * 演示调用工具类生成海报Base64编码字符串
+     */
     @ResponseBody
     @RequestMapping("/base64")
     public Object getPosterBase64() {
@@ -71,7 +79,7 @@ public class ImageController {
         String nickname = "冷风吹过川普的头发";
 
         try {
-            // 调用工具类生成海报Base64编码
+            // 调用工具类生成海报Base64编码字符串
             String base64 = new PosterBuilder()
                     // 普通字体
 //                    .setRegularFontPath(regularFont)
